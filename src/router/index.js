@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import AddsList from '@/components/AddsList'
+import AddsList from '@/components/ProductList'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import SingleAdd from '@/components/SingleAdd'
