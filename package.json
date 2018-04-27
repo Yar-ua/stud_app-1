@@ -2,7 +2,7 @@
   "name": "stud",
   "version": "1.0.0",
   "description": "Example Vue.js project for S.P.A. Course listeners",
-  "author": "Maxim Lyatsky <mlyatsky@mindk.com>",
+  "author": "Yar-ua <yar@yar.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
