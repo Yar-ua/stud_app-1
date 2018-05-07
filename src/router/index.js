@@ -32,7 +32,7 @@ export default new Router({
       component: SingleAdd
     },
     {
-      path: '/:id(\\d+)',
+      path: '/:id(\\d+|new)',
       name: 'AddForm',
       component: AddForm
     },

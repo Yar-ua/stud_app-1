@@ -65,8 +65,8 @@ const Store = new Vuex.Store({
     login (context, params) {
       return axios.post(API.login, params, {withCredentials: false})
         .then(response => {
-          /* context.commit('updateUser', responce.data)
-          context.commit('updateAuth', true) */
+          context.commit('updateUser', response.data)
+          context.commit('updateAuth', true)
           console.log(response.data)
         })
     },
