@@ -10,28 +10,28 @@ const Store = new Vuex.Store({
         id: '1',
         name: 'stool',
         description: 'perfect wood stool with 4 legs',
-        cost: '50',
+        price: '50',
         image: '/static/products/prod_1.jpg'
       },
       {
         id: '2',
         name: 'cavalery',
         description: 'wood horse on wheels, good for quick unpredictable moves',
-        cost: '150',
+        price: '150',
         image: '/static/products/prod_2.jpg'
       },
       {
         id: '3',
         name: 'pepelac',
         description: 'old fashion aircraft for interplanetary flights',
-        cost: '50000000',
+        price: '50000000',
         image: '/static/products/prod_3.jpg'
       },
       {
         id: '4',
         name: 'supercarrier "Gerald Ford"',
         description: 'look like big floating town, expensive toy for real men',
-        cost: '3450000000',
+        price: '3450000000',
         image: '/static/products/prod_4.jpg'
       }
     ],
@@ -50,6 +50,9 @@ const Store = new Vuex.Store({
       context.commit('updateAddsList', params.data)
     },
     loadById (context, params) {
+      if (params.id === 'new') {
+        console.log('new')
+      }
       context.state.addsList.forEach(item => {
         if (item.id === params.id) {
           let editedItem = {}
@@ -62,6 +65,8 @@ const Store = new Vuex.Store({
       context.state.addsList.forEach(item => {
         if (item.id === params.item.id) {
           item.name = params.item.name
+          item.description = params.item.description
+          item.price = params.item.price
         }
       })
 

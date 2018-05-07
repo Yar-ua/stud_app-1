@@ -1,12 +1,3 @@
-<!--<template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <div v-for="item in list" :key="item.id">
-        <router-link :to="{name: 'AddForm', params: {id: item.id}}">{{ item.name }}</router-link>
-    </div>
-  </div>
-</template>-->
-
 <template>
   <div
     id="e3"
@@ -19,6 +10,9 @@
       <v-btn icon>
         <v-icon>search</v-icon>
       </v-btn>
+      <v-card-actions>
+        <v-btn color="red darken-3" :to="{name: 'SingleAdd'}">Create new product</v-btn>
+      </v-card-actions>
     </v-toolbar>
     <v-card>
       <v-container
@@ -35,7 +29,7 @@
                     <div>
                       <div class="headline">{{ item.name }}</div>
                       <div>{{ item.description }}</div>
-                      <div>{{ item.cost }} $</div>
+                      <div>{{ item.price }} $</div>
                       <v-card-actions>
                         <v-btn flat dark :to="{name: 'AddForm', params: {id: item.id}}">See more</v-btn>
                         <v-btn flat dark :to="{name: 'AddForm', params: {id: item.id}}">Edit product</v-btn>
@@ -64,7 +58,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'ProductList',
+  name: 'AddsList',
   data () {
     return {
       msg: 'Welcome to ProductList'
