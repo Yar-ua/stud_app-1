@@ -19,11 +19,7 @@ const Store = new Vuex.Store({
       },
       {
         id: '3',
-        name: 'test3'  {
-      path: '/',
-      name: 'AddsList',
-      component: AddsList
-    },
+        name: 'test3'
       }
     ],
     addItem: {},
@@ -67,10 +63,17 @@ const Store = new Vuex.Store({
       context.commit('updateAddsList', context.state.addsList)
     },
     login (context, params) {
-      return axios.post(API.login, params, {withCredentials: true})
-        .then(responce => {
-          context.commit('updateUser', responce.data)
-          context.commit('updateAuth', true)
+      return axios.post(API.login, params, {withCredentials: false})
+        .then(response => {
+          /* context.commit('updateUser', responce.data)
+          context.commit('updateAuth', true) */
+          console.log(response.data)
+        })
+    },
+    getProducts () {
+      return axios.get(API.products)
+        .then(response => {
+          console.log(response.data)
         })
     }
   }

@@ -1,3 +1,4 @@
 export default {
-  login: 'http://api.stud.hz/?action=login'
+  login: 'http://ymarket.net/login',
+  products: 'http://ymarket.net/products'
 }

@@ -13,6 +13,9 @@
             <input type="password" name="pass" v-model="pass">
         </div>
         <div>
+            <button @click="getProductsAction">Get products</button>
+        </div>
+        <div>
             <button @click="loginAction">Login</button>
         </div>
     </div>
@@ -38,7 +41,9 @@ export default {
   },
   methods: {
     loginAction: function () {
-      this.$store.dispatch('login', {login: this.login, pass: this.pass})
+      /* this.$store.dispatch('login', {login: this.login, pass: this.pass}) */
+      this.$store.dispatch('login', {'login': 'firstuser@ukr.net',
+        'password': '123123'})
         .then(() => {
           this.hasError = false
           this.$router.push({name: 'AddsList'})
@@ -47,6 +52,9 @@ export default {
             this.hasError = true
           }
         })
+    },
+    getProductsAction: function () {
+      this.$store.dispatch('getProducts')
     }
   },
   created () {
