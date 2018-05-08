@@ -41,6 +41,8 @@
           </v-badge>
         </v-btn>
         <v-btn flat href="/login">Login</v-btn>
+        <v-btn flat href="/register">Register</v-btn>
+        <v-btn flat @click="logoutAction">Logout</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>
@@ -57,6 +59,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'App',
   data: () => ({
@@ -64,6 +68,21 @@ export default {
   }),
   props: {
     source: String
+  },
+  computed: {
+    ...mapState(['isAuth'])
+  },
+  methods: {
+    logoutAction: function () {
+      this.$store.dispatch('logout', '')
+        .then(() => {
+          this.$router.push({name: 'AddsList'})
+        }).catch(err => {
+          if (err.response.status !== 200) {
+            this.hasError = true
+          }
+        })
+    }
   }
 }
 </script>

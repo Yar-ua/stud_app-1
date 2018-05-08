@@ -24,6 +24,7 @@ const Store = new Vuex.Store({
     ],
     addItem: {},
     user: {},
+    token: {},
     isAuth: false
   },
   mutations: {
@@ -38,8 +39,12 @@ const Store = new Vuex.Store({
     },
     updateUser (state, data) {
       state.user = data
+    },
+    updateToken (state, data) {
+      state.token = data
     }
   },
+
   actions: {
     setList (context, params) {
       context.commit('updateAddsList', params.data)
@@ -59,17 +64,30 @@ const Store = new Vuex.Store({
           item.name = params.item.name
         }
       })
-
       context.commit('updateAddsList', context.state.addsList)
     },
     login (context, params) {
       return axios.post(API.login, params, {withCredentials: false})
         .then(response => {
           context.commit('updateUser', response.data)
+          context.commit('updateToken', response.data)
           context.commit('updateAuth', true)
-          console.log(response.data)
+          /* console.log('token: ' + context.state.token + ', user ' + context.state.isAuth) */
         })
     },
+    register (context, params) {
+      return axios.post(API.register, params, {withCredentials: false})
+        .then(response => {
+          context.commit('updateUser', response.data)
+          context.commit('updateToken', response.data)
+          context.commit('updateAuth', true)
+          /* console.log('token: ' + context.state.token + ', user ' + context.state.isAuth) */
+        })
+    },
+    /* logout (context) {
+      params = header('X-Auth:' + context.state.token)
+      return axios.get(API.logout, params, {withCredentials: false})
+    }, */
     getProducts () {
       return axios.get(API.products)
         .then(response => {
