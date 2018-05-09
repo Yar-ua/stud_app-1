@@ -61,13 +61,22 @@ export default {
   name: 'AddsList',
   data () {
     return {
-      msg: 'Welcome to ProductList'
+      msg: 'Welcome to ProductList',
+      limit: 10,
+      page: 1
     }
   },
+
   computed: {
-    ...mapState({
+    /* ...mapState({
       list: 'addsList'
-    })
+    }) */
+    list () { return this.$store.state.addsList }
+  },
+
+  created () {
+    console.log('before view')
+    this.$store.dispatch('getProducts')
   }
 }
 </script>

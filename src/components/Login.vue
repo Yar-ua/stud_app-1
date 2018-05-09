@@ -68,9 +68,7 @@ export default {
     ],
     watchpass: true,
     valid: true,
-    hasError: false,
-    limit: 10,
-    page: 1
+    hasError: false
   }),
   computed: {
     ...mapState(['isAuth'])
@@ -86,9 +84,6 @@ export default {
             this.hasError = true
           }
         })
-    },
-    getProductsAction: function () {
-      this.$store.dispatch('getProducts')
     }
   },
   created () {

@@ -29,7 +29,8 @@ const Store = new Vuex.Store({
   },
   mutations: {
     updateAddsList (state, data) {
-      state.addsList = data
+      /* state.addsList = data */
+      console.log('update adds list')
     },
     updateAddItem (state, data) {
       state.addItem = data
@@ -89,9 +90,10 @@ const Store = new Vuex.Store({
       return axios.get(API.logout, params, {withCredentials: false})
     }, */
     getProducts () {
-      return axios.get(API.products)
+      return axios.get(API.products, '', {withCredentials: false})
         .then(response => {
           console.log(response.data)
+          context.commit('updateToken', response.data)
         })
     }
   }
