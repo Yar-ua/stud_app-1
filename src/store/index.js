@@ -85,15 +85,15 @@ const Store = new Vuex.Store({
           /* console.log('token: ' + context.state.token + ', user ' + context.state.isAuth) */
         })
     },
-    /* logout (context) {
-      params = header('X-Auth:' + context.state.token)
-      return axios.get(API.logout, params, {withCredentials: false})
-    }, */
+    logout (context) {
+      /* params = header('X-Auth:' + context.state.token)
+       return axios.get(API.logout, , {withCredentials: false}) */
+    },
     getProducts () {
       return axios.get(API.products, '', {withCredentials: false})
         .then(response => {
-          console.log(response.data)
-          context.commit('updateToken', response.data)
+          console.log(response)
+          context.commit('updateAddsList', response.data)
         })
     }
   }
