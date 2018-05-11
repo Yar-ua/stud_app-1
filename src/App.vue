@@ -32,7 +32,7 @@
       <v-toolbar-title>YarMarket</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat href="/">Market Menu</v-btn>
+        <v-btn flat :to="{name: 'AddsList'}">Market Menu</v-btn>
         <v-btn flat>
           My Cart
           <v-badge right>
@@ -40,8 +40,8 @@
             <v-icon large color="grey lighten-1">shopping_cart</v-icon>
           </v-badge>
         </v-btn>
-        <v-btn flat href="/login">Login</v-btn>
-        <v-btn flat href="/register">Register</v-btn>
+        <v-btn flat :to="{name: 'Login'}">Login</v-btn>
+        <v-btn flat :to="{name: 'Register'}">Register</v-btn>
         <v-btn flat @click="logoutAction">Logout</v-btn>
       </v-toolbar-items>
     </v-toolbar>

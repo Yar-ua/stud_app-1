@@ -35,12 +35,15 @@ const Store = new Vuex.Store({
       state.addItem = data
     },
     updateAuth (state, data) {
+      localStorage.isAuth = data
       state.isAuth = data
     },
     updateUser (state, data) {
+      localStorage.user = data
       state.user = data
     },
     updateToken (state, data) {
+      localStorage.token = data
       state.token = data
     }
   },
@@ -69,32 +72,52 @@ const Store = new Vuex.Store({
     login (context, params) {
       return axios.post(API.login, params, {withCredentials: false})
         .then(response => {
-          context.commit('updateUser', response.data)
-          context.commit('updateToken', response.data)
+          context.commit('updateUser', JSON.parse(response.data)['login'])
+          context.commit('updateToken', JSON.parse(response.data)['token'])
           context.commit('updateAuth', true)
-          /* console.log('token: ' + context.state.token + ', user ' + context.state.isAuth) */
         })
     },
     register (context, params) {
       return axios.post(API.register, params, {withCredentials: false})
         .then(response => {
-          context.commit('updateUser', response.data)
-          context.commit('updateToken', response.data)
+          context.commit('updateUser', JSON.parse(response.data)['login'])
+          context.commit('updateToken', JSON.parse(response.data)['token'])
           context.commit('updateAuth', true)
-          /* console.log('token: ' + context.state.token + ', user ' + context.state.isAuth) */
         })
     },
     logout (context) {
-      /* params = header('X-Auth:' + context.state.token)
-       return axios.get(API.logout, , {withCredentials: false}) */
+      return axios.get(API.logout, '', {withCredentials: false})
+        .then(response => {
+          localStorage.clear()
+          console.log(response.data)
+        })
     },
     getProducts (context) {
       return axios.get(API.products, '', {withCredentials: false})
         .then(response => {
           context.commit('updateAddsList', response.data)
+          console.log('token: ' + localStorage.token + ', user ' + localStorage.user + ' ' + localStorage.isAuth)
         })
     }
   }
+})
+
+// Add a request interceptor
+axios.interceptors.request.use(function (config) {
+  // Do something before request is sent
+  config.headers.common['X-Auth'] = localStorage.token
+  return config
+}, function (error) {
+  // Do something with request error
+  return Promise.reject(error)
+})
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+  // Do something with response data
+  return response
+}, function (error) {
+  // Do something with response error
+  return Promise.reject(error)
 })
 
 export default Store
