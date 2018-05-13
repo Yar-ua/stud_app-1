@@ -1,7 +1,5 @@
 <template>
-  <v-app id="app" dark>
-    <Header />
-    <!-- <v-navigation-drawer
+    <v-navigation-drawer
       clipped
       fixed
       v-model="drawer"
@@ -49,34 +47,19 @@
           <v-btn flat @click="logoutAction">Logout</v-btn>
         </template>
       </v-toolbar-items>
-    </v-toolbar> -->
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-          <router-view/>
-        </v-layout>
-      </v-container>
-    </v-content>
-    <v-footer app fixed>
-      <span>&copy; Yar-ua 2018</span>
-    </v-footer>
-  </v-app>
+    </v-toolbar>
 </template>
 
-<script>
+<script> 
 import { mapState } from 'vuex'
-import Header from './components/Header.vue'
 
 export default {
-  name: 'App',
+  name: 'Header',
   data: () => ({
     drawer: false
   }),
   props: {
     source: String
-  },
-  components: {
-    Header
   },
   computed: {
     ...mapState(['isAuth'])
