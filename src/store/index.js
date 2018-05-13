@@ -25,7 +25,7 @@ const Store = new Vuex.Store({
     addItem: {},
     user: {},
     token: {},
-    isAuth: false
+    isAuth: !!localStorage.isAuth
   },
   mutations: {
     updateAddsList (state, data) {
@@ -90,6 +90,7 @@ const Store = new Vuex.Store({
         .then(response => {
           localStorage.clear()
           console.log(response.data)
+          context.commit('updateAuth', false)
         })
     },
     getProducts (context) {

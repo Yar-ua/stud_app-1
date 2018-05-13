@@ -40,8 +40,10 @@
             <v-icon large color="grey lighten-1">shopping_cart</v-icon>
           </v-badge>
         </v-btn>
-        <v-btn flat :to="{name: 'Login'}">Login</v-btn>
-        <v-btn flat :to="{name: 'Register'}">Register</v-btn>
+        <template v-if="!isAuth">
+          <v-btn flat :to="{name: 'Login'}">Login</v-btn>
+          <v-btn flat :to="{name: 'Register'}">Register</v-btn>
+        </template>
         <v-btn flat @click="logoutAction">Logout</v-btn>
       </v-toolbar-items>
     </v-toolbar>

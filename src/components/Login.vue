@@ -88,7 +88,7 @@ export default {
   },
   created () {
     if (this.isAuth || localStorage.isAuth) {
-      this.$router.push({name: 'Page404'})
+      this.$router.push({name: 'AddsList'})
     }
   }
 }
