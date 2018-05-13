@@ -11,7 +11,7 @@
         <v-icon>search</v-icon>
       </v-btn>
       <v-card-actions>
-        <v-btn color="red darken-3" href="/new">Create new product</v-btn>
+        <v-btn color="red darken-3" :to="{name: 'AddForm', params: {id: 'new'}}">Create new product</v-btn>
       </v-card-actions>
     </v-toolbar>
     <v-card>
