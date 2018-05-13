@@ -90,6 +90,8 @@ const Store = new Vuex.Store({
         .then(response => {
           localStorage.clear()
           console.log(response.data)
+          context.commit('updateUser', '')
+          context.commit('updateToken', '')
           context.commit('updateAuth', false)
         })
     },

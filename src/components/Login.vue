@@ -87,7 +87,7 @@ export default {
     }
   },
   created () {
-    if (this.isAuth || localStorage.isAuth) {
+    if (this.isAuth) {
       this.$router.push({name: 'AddsList'})
     }
   }

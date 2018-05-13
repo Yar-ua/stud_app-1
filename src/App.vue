@@ -44,7 +44,9 @@
           <v-btn flat :to="{name: 'Login'}">Login</v-btn>
           <v-btn flat :to="{name: 'Register'}">Register</v-btn>
         </template>
-        <v-btn flat @click="logoutAction">Logout</v-btn>
+        <template v-if="isAuth">
+          <v-btn flat @click="logoutAction">Logout</v-btn>
+        </template>
       </v-toolbar-items>
     </v-toolbar>
     <v-content>

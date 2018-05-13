@@ -37,7 +37,7 @@ export default new Router({
       component: AddForm
     },
     {
-      path: '*',
+      path: 'Page404',
       name: 'Page404',
       component: Page404
     }

@@ -116,7 +116,7 @@ export default {
   },
   created () {
     if (this.isAuth) {
-      this.$router.push({name: 'Page404'})
+      this.$router.push({name: 'AddsList'})
     }
   }
 }
