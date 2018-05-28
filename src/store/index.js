@@ -9,7 +9,7 @@ Vue.use(Vuex)
 const Store = new Vuex.Store({
   state: {
     addsList: [
-      {
+      /* {
         id: '1',
         name: 'test1'
       },
@@ -20,7 +20,7 @@ const Store = new Vuex.Store({
       {
         id: '3',
         name: 'test3'
-      }
+      } */
     ],
     addItem: {},
     user: {},
@@ -61,6 +61,9 @@ const Store = new Vuex.Store({
         }
       })
     },
+    resetAddItem (context) {
+      context.commit('updateAddItem', '')
+    },
     save (context, params) {
       context.state.addsList.forEach(item => {
         if (item.id === params.item.id) {
@@ -68,6 +71,14 @@ const Store = new Vuex.Store({
         }
       })
       context.commit('updateAddsList', context.state.addsList)
+    },
+    update (context, params) {
+      /* return axios.put(update_product) */
+      console.log(params)
+      /* return axios.put(API.products(), params, {withCredentials: false})
+        .then(response => {
+          context.commit('updateAddsList', response.data)
+        }) */
     },
     login (context, params) {
       return axios.post(API.login, params, {withCredentials: false})
@@ -89,7 +100,6 @@ const Store = new Vuex.Store({
       return axios.get(API.logout, '', {withCredentials: false})
         .then(response => {
           localStorage.clear()
-          console.log(response.data)
           context.commit('updateUser', '')
           context.commit('updateToken', '')
           context.commit('updateAuth', false)
@@ -99,7 +109,6 @@ const Store = new Vuex.Store({
       return axios.get(API.products, '', {withCredentials: false})
         .then(response => {
           context.commit('updateAddsList', response.data)
-          console.log('token: ' + localStorage.token + ', user ' + localStorage.user + ' ' + localStorage.isAuth)
         })
     }
   }

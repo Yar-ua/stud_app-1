@@ -24,7 +24,7 @@
             <v-layout row wrap>
               <v-flex xs12 sm6>
                 <v-text-field
-                  v-model="name"
+                  v-model="item.name"
                   box
                   label="Product Name"
                   :rules="nameRules"
@@ -32,7 +32,7 @@
               </v-flex>
               <v-flex xs12 sm6>
                 <v-text-field
-                  v-model="price"
+                  v-model="item.price"
                   box
                   label="Product Price, $"
                   :rules="priceRules"
@@ -40,7 +40,7 @@
               </v-flex>
               <v-flex xs12>
                 <v-text-field box
-                  v-model="description"
+                  v-model="item.description"
                   multi-line
                   label="Product's Description"
                   :rules="descriptionRules"
@@ -61,7 +61,14 @@
             :disabled="!valid"
             @click="save"
             >
-              SAVE PRODUCT
+            SAVE PRODUCT
+            </v-btn>
+            <v-btn
+            color="primary"
+            :disabled="!valid"
+            @click="update"
+            >
+            UPDATE PRODUCT
             </v-btn>
           </v-card-actions>
         </v-form>
@@ -102,15 +109,29 @@ export default {
   },
   methods: {
     save: function () {
+      console.log(this.item.price)
       /* this.$store.dispatch('save', {item: this.item})
         .then(() => {
           this.$router.push({name: 'AddsList'})
         }) */
-      console.log(this.name, this.description, this.price)
+      /* var value = {}
+      var product = {'formData': value}
+      value['name'] = this.name
+      value['description'] = this.description
+      value['price'] = this.price
+      product = JSON.stringify(product)
+      console.log(product) */
+    },
+    update: function () {
+      this.$store.dispatch('update', {formData: {id: this.item.id, name: this.item.name, description: this.item.description, price: this.item.price}})
     }
   },
   created () {
-    this.$store.dispatch('loadById', {id: this.$route.params.id})
+    if (this.$route.params.id !== 'new') {
+      this.$store.dispatch('loadById', {id: this.$route.params.id})
+    } else {
+      this.$store.dispatch('resetAddItem')
+    }
   }
 }
 </script>

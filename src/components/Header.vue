@@ -1,5 +1,6 @@
 <template>
-    <v-navigation-drawer
+  <div>
+  <v-navigation-drawer
       clipped
       fixed
       v-model="drawer"
@@ -27,7 +28,7 @@
     </v-navigation-drawer>
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <img id="logo" src="../src/assets/logo.png" alt="Smiley face">
+      <img id="logo" src="@/assets/logo.png" alt="Smiley face">
       <v-toolbar-title>YarMarket</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
@@ -48,9 +49,10 @@
         </template>
       </v-toolbar-items>
     </v-toolbar>
+  </div>
 </template>
 
-<script> 
+<script>
 import { mapState } from 'vuex'
 
 export default {

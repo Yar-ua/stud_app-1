@@ -1,7 +1,7 @@
 <template>
   <v-app id="app" dark>
-    <!-- <Header /> -->
-    <v-navigation-drawer
+    <app-header></app-header>
+    <!--<v-navigation-drawer
       clipped
       fixed
       v-model="drawer"
@@ -49,7 +49,7 @@
           <v-btn flat @click="logoutAction">Logout</v-btn>
         </template>
       </v-toolbar-items>
-    </v-toolbar>
+    </v-toolbar> -->
     <v-content>
       <v-container fluid fill-height>
         <v-layout justify-center align-center>
@@ -65,7 +65,7 @@
 
 <script>
 import { mapState } from 'vuex'
-/* import Header from './components/Header.vue' */
+import Header from '@/components/Header'
 
 export default {
   name: 'App',
@@ -75,9 +75,9 @@ export default {
   props: {
     source: String
   },
-  /* components: {
-    Header
-  }, */
+  components: {
+    'app-header': Header
+  },
   computed: {
     ...mapState(['isAuth'])
   },
