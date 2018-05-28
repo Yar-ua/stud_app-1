@@ -83,17 +83,17 @@ import { mapState } from 'vuex'
 export default {
   name: 'AddForm',
   data: () => ({
-    name: '',
+    name: 'dsdf',
     nameRules: [
       v => !!v || 'Name is required',
       v => (v && v.length <= 30) || 'Product Name must be less than 255 characters'
     ],
-    description: '',
+    description: 'asdsd',
     descriptionRules: [
       v => !!v || 'Description is required',
       v => (v && v.length <= 30) || 'Product Description must be less than 1000 characters'
     ],
-    price: '',
+    price: '23',
     priceRules: [
       v => !!v || 'Price is required',
       v => (v && v.length <= 30) || 'Price must be less than 20 digits',
@@ -109,21 +109,13 @@ export default {
   },
   methods: {
     save: function () {
-      console.log(this.item.price)
-      /* this.$store.dispatch('save', {item: this.item})
-        .then(() => {
-          this.$router.push({name: 'AddsList'})
-        }) */
-      /* var value = {}
-      var product = {'formData': value}
-      value['name'] = this.name
-      value['description'] = this.description
-      value['price'] = this.price
-      product = JSON.stringify(product)
-      console.log(product) */
+      var params = {formData: {name: this.name, description: this.description, price: this.price}}
+      /* console.log("something="+this.item.name) */
+      /* this.$store.dispatch('createProduct', params) */
     },
     update: function () {
-      this.$store.dispatch('update', {formData: {id: this.item.id, name: this.item.name, description: this.item.description, price: this.item.price}})
+      var params = {id: this.item.id, formData: {name: this.item.name, description: this.item.description, price: this.item.price}}
+      this.$store.dispatch('updateProduct', params)
     }
   },
   created () {

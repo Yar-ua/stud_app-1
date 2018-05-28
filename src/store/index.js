@@ -4,6 +4,8 @@ import axios from 'axios'
 
 import API from './api'
 
+import Products from './products'
+
 Vue.use(Vuex)
 
 const Store = new Vuex.Store({
@@ -64,21 +66,23 @@ const Store = new Vuex.Store({
     resetAddItem (context) {
       context.commit('updateAddItem', '')
     },
-    save (context, params) {
-      context.state.addsList.forEach(item => {
-        if (item.id === params.item.id) {
-          item.name = params.item.name
-        }
-      })
-      context.commit('updateAddsList', context.state.addsList)
-    },
-    update (context, params) {
-      /* return axios.put(update_product) */
-      console.log(params)
-      /* return axios.put(API.products(), params, {withCredentials: false})
+    getProducts (context) {
+      return axios.get(API.products, '', {withCredentials: false})
         .then(response => {
           context.commit('updateAddsList', response.data)
-        }) */
+        })
+    },
+    createProduct (context, params) {
+      return axios.post(API.newProduct, params, {withCredentials: false})
+        .then(response => {
+          context.commit('updateAddsList', response.data)
+        })
+    },
+    updateProduct (context, params) {
+      return axios.put(API.product(params.id), params, {withCredentials: false})
+        .then(response => {
+          context.commit('updateAddsList', response.data)
+        })
     },
     login (context, params) {
       return axios.post(API.login, params, {withCredentials: false})
@@ -103,12 +107,6 @@ const Store = new Vuex.Store({
           context.commit('updateUser', '')
           context.commit('updateToken', '')
           context.commit('updateAuth', false)
-        })
-    },
-    getProducts (context) {
-      return axios.get(API.products, '', {withCredentials: false})
-        .then(response => {
-          context.commit('updateAddsList', response.data)
         })
     }
   }
