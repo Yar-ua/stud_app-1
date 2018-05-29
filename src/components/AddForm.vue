@@ -1,15 +1,3 @@
-<!--<template>
-  <div class="form" lighten>
-    <h1>Create or update product page: </h1>
-    <h3>Add Id: {{ $route.params.id }}</h3>
-    <input v-model="item.name"/>
-    <br /><br />
-    <button @click="save()">Save</button>
-     &nbsp;&nbsp;
-    <router-link :to="{name: 'AddsList'}">Cancel</router-link>
-  </div>
-</template>-->
-
 <template>
   <v-layout justify-center>
     <v-flex xs12 sm10 md8 lg8>
@@ -56,20 +44,31 @@
             <v-spacer></v-spacer>
             <v-slide-x-reverse-transition>
             </v-slide-x-reverse-transition>
-            <v-btn
-            color="primary"
-            :disabled="!valid"
-            @click="save"
-            >
-            SAVE PRODUCT
-            </v-btn>
-            <v-btn
-            color="primary"
-            :disabled="!valid"
-            @click="update"
-            >
-            UPDATE PRODUCT
-            </v-btn>
+            <template v-if="this.$route.params.id == 'new'">
+              <v-btn
+              color="primary"
+              :disabled="!valid"
+              @click="save"
+              >
+              SAVE PRODUCT
+              </v-btn>
+            </template>
+            <template v-if="this.$route.params.id !== 'new'">
+              <v-btn
+              color="primary"
+              :disabled="!valid"
+              @click="update"
+              >
+              UPDATE PRODUCT
+              </v-btn>
+              <v-btn
+              color="error"
+              :disabled="!valid"
+              @click="destroy"
+              >
+              DELETE PRODUCT
+              </v-btn>
+            </template>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -83,20 +82,20 @@ import { mapState } from 'vuex'
 export default {
   name: 'AddForm',
   data: () => ({
-    name: 'dsdf',
+    name: '',
     nameRules: [
       v => !!v || 'Name is required',
       v => (v && v.length <= 30) || 'Product Name must be less than 255 characters'
     ],
-    description: 'asdsd',
+    description: '',
     descriptionRules: [
       v => !!v || 'Description is required',
-      v => (v && v.length <= 30) || 'Product Description must be less than 1000 characters'
+      v => (v && v.length <= 1000) || 'Product Description must be less than 1000 characters'
     ],
-    price: '23',
+    price: '',
     priceRules: [
       v => !!v || 'Price is required',
-      v => (v && v.length <= 30) || 'Price must be less than 20 digits',
+      v => (v && v.length <= 20) || 'Price must be less than 20 digits',
       v => /^[-+]?[0-9]*[.,]?[0-9]+(?:[eE][-+]?[0-9]+)?$/.test(v) || 'Price must be digit'
     ],
     valid: true,
@@ -109,13 +108,29 @@ export default {
   },
   methods: {
     save: function () {
-      var params = {formData: {name: this.name, description: this.description, price: this.price}}
-      /* console.log("something="+this.item.name) */
-      /* this.$store.dispatch('createProduct', params) */
+      var params = {formData: {name: this.item.name, description: this.item.description, price: this.item.price}}
+      this.$store.dispatch('createProduct', params)
+        .then(() => {
+          this.hasError = false
+          this.$router.push({name: 'AddsList'})
+        }).catch(err => {
+          if (err.response.status !== 200) {
+            this.hasError = true
+          }
+        })
     },
     update: function () {
       var params = {id: this.item.id, formData: {name: this.item.name, description: this.item.description, price: this.item.price}}
       this.$store.dispatch('updateProduct', params)
+        .then(() => {
+          this.$router.push({name: 'AddsList'})
+        })
+    },
+    destroy: function () {
+      this.$store.dispatch('deleteProduct', {id: this.item.id})
+        .then(() => {
+          this.$router.push({name: 'AddsList'})
+        })
     }
   },
   created () {

@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import API from './api'
 
-import Products from './products'
+/* import Products from './products' */
 
 Vue.use(Vuex)
 
@@ -64,28 +64,40 @@ const Store = new Vuex.Store({
       })
     },
     resetAddItem (context) {
-      context.commit('updateAddItem', '')
+      context.commit('updateAddItem', {id: '', name: '', description: '', price: ''})
     },
     getProducts (context) {
-      return axios.get(API.products, '', {withCredentials: false})
+      return axios.get(API.products, '')
         .then(response => {
           context.commit('updateAddsList', response.data)
         })
     },
     createProduct (context, params) {
-      return axios.post(API.newProduct, params, {withCredentials: false})
+      return axios.post(API.products, params)
         .then(response => {
-          context.commit('updateAddsList', response.data)
+          if (response.data === true) {
+            /* TODO make successful alert */
+          }
         })
     },
     updateProduct (context, params) {
-      return axios.put(API.product(params.id), params, {withCredentials: false})
+      return axios.put(API.product(params.id), params)
         .then(response => {
-          context.commit('updateAddsList', response.data)
+          if (response.data === true) {
+            /* TODO make successful alert */
+          }
+        })
+    },
+    deleteProduct (context, params) {
+      return axios.delete(API.product(params.id), '')
+        .then(response => {
+          if (response.data === true) {
+            /* TODO make successful alert */
+          }
         })
     },
     login (context, params) {
-      return axios.post(API.login, params, {withCredentials: false})
+      return axios.post(API.login, params)
         .then(response => {
           context.commit('updateUser', JSON.parse(response.data)['login'])
           context.commit('updateToken', JSON.parse(response.data)['token'])
@@ -93,7 +105,7 @@ const Store = new Vuex.Store({
         })
     },
     register (context, params) {
-      return axios.post(API.register, params, {withCredentials: false})
+      return axios.post(API.register, params)
         .then(response => {
           context.commit('updateUser', JSON.parse(response.data)['login'])
           context.commit('updateToken', JSON.parse(response.data)['token'])
@@ -101,7 +113,7 @@ const Store = new Vuex.Store({
         })
     },
     logout (context) {
-      return axios.get(API.logout, '', {withCredentials: false})
+      return axios.get(API.logout, '')
         .then(response => {
           localStorage.clear()
           context.commit('updateUser', '')

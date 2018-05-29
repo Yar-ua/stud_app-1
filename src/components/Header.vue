@@ -33,18 +33,14 @@
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat :to="{name: 'AddsList'}">Market Menu</v-btn>
-        <v-btn flat>
-          My Cart
-          <v-badge right>
-            <span slot="badge">0</span>
-            <v-icon large color="grey lighten-1">shopping_cart</v-icon>
-          </v-badge>
-        </v-btn>
         <template v-if="!isAuth">
           <v-btn flat :to="{name: 'Login'}">Login</v-btn>
           <v-btn flat :to="{name: 'Register'}">Register</v-btn>
         </template>
         <template v-if="isAuth">
+          <v-btn flat>
+            User: {{ user }}
+          </v-btn>
           <v-btn flat @click="logoutAction">Logout</v-btn>
         </template>
       </v-toolbar-items>
@@ -64,7 +60,10 @@ export default {
     source: String
   },
   computed: {
-    ...mapState(['isAuth'])
+    ...mapState(['isAuth']),
+    user () {
+      console.log(this.$store.state.user)
+    }
   },
   methods: {
     logoutAction: function () {

@@ -9,5 +9,6 @@ export default {
   /* post /products (creating product) */
   products: process.env.apiUrl + '/products',
   /* put /products/:id (updating product) */
+  /* delete /products/:id (deleting product) */
   product: (productId) => (process.env.apiUrl + '/products/#{id}').replace('#{id}', productId)
 }
