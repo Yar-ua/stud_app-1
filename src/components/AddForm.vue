@@ -2,7 +2,7 @@
   <v-layout justify-center>
     <v-flex xs12 sm10 md8 lg8>
       <v-card>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form ref="form" v-model="valid" lazy-validation enctype="multipart/form-data">
           <v-toolbar color="grey darken-3">
             <v-toolbar-title class="white--text">Create or update product</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -42,6 +42,7 @@
                   style="display: none"
                   ref="image"
                   accept="image/*"
+                  name="imagefile"
                   @change="onFilePicked"
                   >
               </v-flex>
@@ -114,7 +115,7 @@ export default {
     hasError: false,
     imageName: '',
     imageUrl: '',
-    imageFile: ''
+    imagefile: ''
   }),
   computed: {
     ...mapState({
@@ -125,6 +126,7 @@ export default {
     save: function () {
       var params = {formData: {name: this.item.name, description: this.item.description, price: this.item.price, user_id: 25}} /* @TODO solve user_id */
       this.$store.dispatch('createProduct', params)
+      this.$store.dispatch('createImage', {product_id: 32})
         .then(() => {
           this.hasError = false
           this.$router.push({name: 'AddsList'})
@@ -148,16 +150,16 @@ export default {
         })
     },
     pickFile () {
-      this.$refs.image.click ()
+      this.$refs.image.click()
     },
     onFilePicked (e) {
       const files = e.target.files
-      if(files[0] !== undefined) {
+      if (files[0] !== undefined) {
         this.imageName = files[0].name
-        if(this.imageName.lastIndexOf('.') <= 0) {
+        if (this.imageName.lastIndexOf('.') <= 0) {
           return
         }
-        const fr = new FileReader ()
+        const fr = new FileReader()
         fr.readAsDataURL(files[0])
         fr.addEventListener('load', () => {
           this.imageUrl = fr.result

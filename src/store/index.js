@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 import API from './api'
+import jsProducts from './products'
 
 /* import Products from './products' */
 
@@ -29,6 +30,9 @@ const Store = new Vuex.Store({
     user: {},
     token: {},
     isAuth: !!localStorage.isAuth
+  },
+  components: {
+    jsProducts
   },
   mutations: {
     updateAddsList (state, data) {
@@ -67,6 +71,7 @@ const Store = new Vuex.Store({
     resetAddItem (context) {
       context.commit('updateAddItem', {id: '', name: '', description: '', price: ''})
     },
+    /*
     getProducts (context) {
       return axios.get(API.products, '')
         .then(response => {
@@ -76,16 +81,14 @@ const Store = new Vuex.Store({
     createProduct (context, params) {
       return axios.post(API.products, params)
         .then(response => {
-          if (response.data === true) {
-            /* TODO make successful alert */
-          }
+          context.commit('updateAddItem', response.data)
         })
     },
     updateProduct (context, params) {
       return axios.put(API.product(params.id), params)
         .then(response => {
           if (response.data === true) {
-            /* TODO make successful alert */
+            /* TODO make successful alert */ /*
           }
         })
     },
@@ -93,8 +96,20 @@ const Store = new Vuex.Store({
       return axios.delete(API.product(params.id), '')
         .then(response => {
           if (response.data === true) {
-            /* TODO make successful alert */
+            /* TODO make successful alert */ /*
           }
+        })
+    }, */
+    createImage (context, params) {
+      return axios.post(API.images, params)
+        .then(response => {
+          /* context.commit('updateAddItem',
+            {
+              id: response.data.id,
+              name: response.data.name,
+              description: response.data.description,
+              price: response.data.price
+            }) */
         })
     },
     login (context, params) {
