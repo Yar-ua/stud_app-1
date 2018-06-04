@@ -34,6 +34,17 @@
                   :rules="descriptionRules"
                   ></v-text-field>
               </v-flex>
+              <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+                <img :src="imageUrl" height="150" v-if="imageUrl"/>
+                <v-text-field label="Select Image" @click='pickFile' v-model='imagefile' prepend-icon='attach_file'></v-text-field>
+                <input
+                  type="file"
+                  style="display: none"
+                  ref="image"
+                  accept="image/*"
+                  @change="onFilePicked"
+                  >
+              </v-flex>
             </v-layout>
           </v-container>
 
@@ -82,6 +93,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'AddForm',
   data: () => ({
+    dialog: false,
     name: '',
     nameRules: [
       v => !!v || 'Name is required',
@@ -99,7 +111,10 @@ export default {
       v => /^[-+]?[0-9]*[.,]?[0-9]+(?:[eE][-+]?[0-9]+)?$/.test(v) || 'Price must be digit'
     ],
     valid: true,
-    hasError: false
+    hasError: false,
+    imageName: '',
+    imageUrl: '',
+    imageFile: ''
   }),
   computed: {
     ...mapState({
@@ -108,7 +123,7 @@ export default {
   },
   methods: {
     save: function () {
-      var params = {formData: {name: this.item.name, description: this.item.description, price: this.item.price}}
+      var params = {formData: {name: this.item.name, description: this.item.description, price: this.item.price, user_id: 25}} /* @TODO solve user_id */
       this.$store.dispatch('createProduct', params)
         .then(() => {
           this.hasError = false
@@ -131,8 +146,31 @@ export default {
         .then(() => {
           this.$router.push({name: 'AddsList'})
         })
+    },
+    pickFile () {
+      this.$refs.image.click ()
+    },
+    onFilePicked (e) {
+      const files = e.target.files
+      if(files[0] !== undefined) {
+        this.imageName = files[0].name
+        if(this.imageName.lastIndexOf('.') <= 0) {
+          return
+        }
+        const fr = new FileReader ()
+        fr.readAsDataURL(files[0])
+        fr.addEventListener('load', () => {
+          this.imageUrl = fr.result
+          this.imageFile = files[0] // this is an image file that can be sent to server...
+        })
+      } else {
+        this.imageName = ''
+        this.imageFile = ''
+        this.imageUrl = ''
+      }
     }
   },
+
   created () {
     if (this.$route.params.id !== 'new') {
       this.$store.dispatch('loadById', {id: this.$route.params.id})

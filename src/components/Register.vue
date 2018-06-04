@@ -22,6 +22,14 @@
               required
             ></v-text-field>
             <v-text-field
+              mask="+##(###)###-##-##"
+              v-model="phone"
+              :rules="phoneRules"
+              label="Phone number"
+              single-line
+              required
+            ></v-text-field>
+            <v-text-field
               name="input-10-1"
               label="Enter your password"
               hint="At least 6 characters"
@@ -82,6 +90,11 @@ export default {
     emailRules: [
       v => !!v || 'E-mail is required',
       v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'],
+    phone: '',
+    phoneRules: [
+      v => !!v || 'Phone is required',
+      v => (v && v.length <= 20) || 'Phone No must be less than 10 digits',
+      v => /^[-+]?[0-9]*[.,]?[0-9]+(?:[eE][-+]?[0-9]+)?$/.test(v) || 'Phone No must be digit'],
     password: '',
     passwordRules: [
       v => !!v || 'Name is required',
@@ -101,7 +114,7 @@ export default {
   methods: {
     registerAction: function () {
       if (this.password === this.repassword) {
-        this.$store.dispatch('register', {login: this.login, email: this.email, password: this.password})
+        this.$store.dispatch('register', {login: this.login, email: this.email, phone: this.phone, password: this.password})
           .then(() => {
             this.hasError = false
             this.$router.push({name: 'AddsList'})

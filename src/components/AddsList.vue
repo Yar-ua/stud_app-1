@@ -1,17 +1,19 @@
 <template>
   <div
     id="e3"
-    style="max-width: 80%; margin: auto;"
+    style="width: 80%; margin: auto;"
     class="grey lighten-3"
   >
     <v-toolbar color="grey darken-3">
       <v-toolbar-title class="white--text">Our products</v-toolbar-title>
       <v-spacer></v-spacer>
+      <template v-if="auth">
+        <v-btn color="red darken-3" :to="{name: 'AddForm', params: {id: 'new'}}">Create new product</v-btn>
+      </template>
       <v-btn icon>
         <v-icon>search</v-icon>
       </v-btn>
       <v-card-actions>
-        <v-btn color="red darken-3" :to="{name: 'AddForm', params: {id: 'new'}}">Create new product</v-btn>
       </v-card-actions>
     </v-toolbar>
     <v-card>
@@ -69,7 +71,8 @@ export default {
 
   computed: {
     ...mapState({
-      list: 'addsList'
+      list: 'addsList',
+      auth: 'isAuth'
     })
   },
 

@@ -60,10 +60,10 @@ export default {
     source: String
   },
   computed: {
-    ...mapState(['isAuth']),
-    user () {
-      console.log(this.$store.state.user)
-    }
+    ...mapState({
+      isAuth: 'isAuth',
+      user: 'user'
+    })
   },
   methods: {
     logoutAction: function () {

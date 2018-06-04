@@ -25,6 +25,7 @@ const Store = new Vuex.Store({
       } */
     ],
     addItem: {},
+    smth: 'bayoboo',
     user: {},
     token: {},
     isAuth: !!localStorage.isAuth
@@ -99,16 +100,18 @@ const Store = new Vuex.Store({
     login (context, params) {
       return axios.post(API.login, params)
         .then(response => {
-          context.commit('updateUser', JSON.parse(response.data)['login'])
-          context.commit('updateToken', JSON.parse(response.data)['token'])
+          console.log(response)
+          context.commit('updateUser', response.data.login)
+          context.commit('updateToken', response.data.token)
           context.commit('updateAuth', true)
         })
     },
     register (context, params) {
+      console.log(params)
       return axios.post(API.register, params)
         .then(response => {
-          context.commit('updateUser', JSON.parse(response.data)['login'])
-          context.commit('updateToken', JSON.parse(response.data)['token'])
+          context.commit('updateUser', response.data.login)
+          context.commit('updateToken', response.data.token)
           context.commit('updateAuth', true)
         })
     },
