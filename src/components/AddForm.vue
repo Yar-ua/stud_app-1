@@ -129,8 +129,7 @@ export default {
         formData: {
           name: this.item.name,
           description: this.item.description,
-          price: this.item.price,
-          user_id: 24
+          price: this.item.price
         },
         image: {
           filename: this.imageName,
@@ -156,7 +155,6 @@ export default {
         })
     },
     destroy: function () {
-      console.log(this.item.id)
       this.$store.dispatch('products/delete', {id: this.item.id})
         .then(() => {
           this.$router.push({name: 'AddsList'})

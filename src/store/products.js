@@ -19,7 +19,6 @@ export default {
       }
     ],
     addItem: {},
-    smth: 'bayoboo',
     user: {},
     token: {},
     isAuth: !!localStorage.isAuth

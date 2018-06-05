@@ -61,11 +61,9 @@ export default {
   },
   computed: {
     ...mapState({
-      isAuth: 'isAuth'
-    }),
-    user: function () {
-      return localStorage.user
-    }
+      isAuth: 'isAuth',
+      user: 'user'
+    })
   },
   methods: {
     logoutAction: function () {

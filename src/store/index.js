@@ -9,22 +9,6 @@ Vue.use(Vuex)
 
 const Store = new Vuex.Store({
   state: {
-    addsList: [
-      /* {
-        id: '1',
-        name: 'test1'
-      },
-      {
-        id: '2',
-        name: 'test2'
-      },
-      {
-        id: '3',
-        name: 'test3'
-      } */
-    ],
-    addItem: {},
-    smth: 'bayoboo',
     user: {},
     token: {},
     isAuth: !!localStorage.isAuth
@@ -40,7 +24,6 @@ const Store = new Vuex.Store({
     updateUser (state, data) {
       localStorage.user = data
       state.user = data
-      console.log(localStorage)
     },
     updateToken (state, data) {
       localStorage.token = data
@@ -69,8 +52,8 @@ const Store = new Vuex.Store({
     logout (context) {
       return axios.get(API.logout, '')
         .then(response => {
-          context.commit('updateUser', '')
-          context.commit('updateToken', '')
+          context.commit('updateUser', undefined)
+          context.commit('updateToken', undefined)
           context.commit('updateAuth', false)
           localStorage.clear()
         })
