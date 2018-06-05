@@ -71,7 +71,6 @@ const Store = new Vuex.Store({
     resetAddItem (context) {
       context.commit('updateAddItem', {id: '', name: '', description: '', price: ''})
     },
-    /*
     getProducts (context) {
       return axios.get(API.products, '')
         .then(response => {
@@ -88,7 +87,7 @@ const Store = new Vuex.Store({
       return axios.put(API.product(params.id), params)
         .then(response => {
           if (response.data === true) {
-            /* TODO make successful alert */ /*
+            /* TODO make successful alert */
           }
         })
     },
@@ -96,10 +95,10 @@ const Store = new Vuex.Store({
       return axios.delete(API.product(params.id), '')
         .then(response => {
           if (response.data === true) {
-            /* TODO make successful alert */ /*
+            /* TODO make successful alert */
           }
         })
-    }, */
+    },
     createImage (context, params) {
       return axios.post(API.images, params)
         .then(response => {
