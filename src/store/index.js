@@ -40,6 +40,7 @@ const Store = new Vuex.Store({
     updateUser (state, data) {
       localStorage.user = data
       state.user = data
+      console.log(localStorage)
     },
     updateToken (state, data) {
       localStorage.token = data
@@ -48,22 +49,9 @@ const Store = new Vuex.Store({
   },
 
   actions: {
-    createImage (context, params) {
-      return axios.post(API.images, params)
-        .then(response => {
-          /* context.commit('updateAddItem',
-            {
-              id: response.data.id,
-              name: response.data.name,
-              description: response.data.description,
-              price: response.data.price
-            }) */
-        })
-    },
     login (context, params) {
       return axios.post(API.login, params)
         .then(response => {
-          console.log(response)
           context.commit('updateUser', response.data.login)
           context.commit('updateToken', response.data.token)
           context.commit('updateAuth', true)
@@ -81,10 +69,10 @@ const Store = new Vuex.Store({
     logout (context) {
       return axios.get(API.logout, '')
         .then(response => {
-          localStorage.clear()
           context.commit('updateUser', '')
           context.commit('updateToken', '')
           context.commit('updateAuth', false)
+          localStorage.clear()
         })
     }
   }

@@ -34,6 +34,7 @@
                   :rules="descriptionRules"
                   ></v-text-field>
               </v-flex>
+
               <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
                 <img :src="imageUrl" height="150" v-if="imageUrl"/>
                 <v-text-field label="Select Image" @click='pickFile' v-model='imagefile' prepend-icon='attach_file'></v-text-field>
@@ -124,7 +125,19 @@ export default {
   },
   methods: {
     save: function () {
-      var params = {formData: {name: this.item.name, description: this.item.description, price: this.item.price, user_id: 25}} /* @TODO solve user_id */
+      var params = {
+        formData: {
+          name: this.item.name,
+          description: this.item.description,
+          price: this.item.price,
+          user_id: 24
+        },
+        image: {
+          filename: this.imageName,
+          body: this.imageUrl
+        }
+      } /* @TODO solve user_id */
+      console.log(params)
       this.$store.dispatch('products/create', params)
         .then(() => {
           this.hasError = false
@@ -143,6 +156,7 @@ export default {
         })
     },
     destroy: function () {
+      console.log(this.item.id)
       this.$store.dispatch('products/delete', {id: this.item.id})
         .then(() => {
           this.$router.push({name: 'AddsList'})
@@ -163,6 +177,9 @@ export default {
         fr.addEventListener('load', () => {
           this.imageUrl = fr.result
           this.imageFile = files[0] // this is an image file that can be sent to server...
+          // console.log(this.imageUrl)
+          // console.log(this.imageFile)
+          // console.log(this.imageName)
         })
       } else {
         this.imageName = ''
