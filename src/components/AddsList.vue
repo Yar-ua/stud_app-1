@@ -70,14 +70,16 @@ export default {
   },
 
   computed: {
+    ...mapState('products', {
+      list: 'addsList'
+    }),
     ...mapState({
-      list: 'addsList',
       auth: 'isAuth'
     })
   },
 
   created () {
-    this.$store.dispatch('getProducts')
+    this.$store.dispatch('products/index')
   }
 }
 </script>

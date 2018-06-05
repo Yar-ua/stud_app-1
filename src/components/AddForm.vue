@@ -42,7 +42,7 @@
                   style="display: none"
                   ref="image"
                   accept="image/*"
-                  name="imagefile"
+                  :imagefile="imagefile"
                   @change="onFilePicked"
                   >
               </v-flex>
@@ -118,15 +118,14 @@ export default {
     imagefile: ''
   }),
   computed: {
-    ...mapState({
+    ...mapState('products', {
       item: 'addItem'
     })
   },
   methods: {
     save: function () {
       var params = {formData: {name: this.item.name, description: this.item.description, price: this.item.price, user_id: 25}} /* @TODO solve user_id */
-      this.$store.dispatch('createProduct', params)
-      this.$store.dispatch('createImage', {imagefile: imagefile, product_id: item.id})
+      this.$store.dispatch('products/create', params)
         .then(() => {
           this.hasError = false
           this.$router.push({name: 'AddsList'})
@@ -138,13 +137,13 @@ export default {
     },
     update: function () {
       var params = {id: this.item.id, formData: {name: this.item.name, description: this.item.description, price: this.item.price}}
-      this.$store.dispatch('updateProduct', params)
+      this.$store.dispatch('products/update', params)
         .then(() => {
           this.$router.push({name: 'AddsList'})
         })
     },
     destroy: function () {
-      this.$store.dispatch('deleteProduct', {id: this.item.id})
+      this.$store.dispatch('products/delete', {id: this.item.id})
         .then(() => {
           this.$router.push({name: 'AddsList'})
         })
@@ -175,9 +174,9 @@ export default {
 
   created () {
     if (this.$route.params.id !== 'new') {
-      this.$store.dispatch('loadById', {id: this.$route.params.id})
+      this.$store.dispatch('products/show', {id: this.$route.params.id})
     } else {
-      this.$store.dispatch('resetAddItem')
+      this.$store.dispatch('products/resetAddItem')
     }
   }
 }

@@ -3,9 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 import API from './api'
-import jsProducts from './products'
-
-/* import Products from './products' */
+import products from './products'
 
 Vue.use(Vuex)
 
@@ -31,16 +29,10 @@ const Store = new Vuex.Store({
     token: {},
     isAuth: !!localStorage.isAuth
   },
-  components: {
-    jsProducts
+  modules: {
+    products
   },
   mutations: {
-    updateAddsList (state, data) {
-      state.addsList = data
-    },
-    updateAddItem (state, data) {
-      state.addItem = data
-    },
     updateAuth (state, data) {
       localStorage.isAuth = data
       state.isAuth = data
@@ -56,49 +48,6 @@ const Store = new Vuex.Store({
   },
 
   actions: {
-    setList (context, params) {
-      context.commit('updateAddsList', params.data)
-    },
-    loadById (context, params) {
-      context.state.addsList.forEach(item => {
-        if (item.id === params.id) {
-          let editedItem = {}
-          Object.assign(editedItem, item)
-          context.commit('updateAddItem', editedItem)
-        }
-      })
-    },
-    resetAddItem (context) {
-      context.commit('updateAddItem', {id: '', name: '', description: '', price: ''})
-    },
-    getProducts (context) {
-      return axios.get(API.products, '')
-        .then(response => {
-          context.commit('updateAddsList', response.data)
-        })
-    },
-    createProduct (context, params) {
-      return axios.post(API.products, params)
-        .then(response => {
-          context.commit('updateAddItem', response.data)
-        })
-    },
-    updateProduct (context, params) {
-      return axios.put(API.product(params.id), params)
-        .then(response => {
-          if (response.data === true) {
-            /* TODO make successful alert */
-          }
-        })
-    },
-    deleteProduct (context, params) {
-      return axios.delete(API.product(params.id), '')
-        .then(response => {
-          if (response.data === true) {
-            /* TODO make successful alert */
-          }
-        })
-    },
     createImage (context, params) {
       return axios.post(API.images, params)
         .then(response => {
