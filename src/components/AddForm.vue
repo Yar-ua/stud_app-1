@@ -126,7 +126,7 @@ export default {
     save: function () {
       var params = {formData: {name: this.item.name, description: this.item.description, price: this.item.price, user_id: 25}} /* @TODO solve user_id */
       this.$store.dispatch('createProduct', params)
-      this.$store.dispatch('createImage', {product_id: 32})
+      this.$store.dispatch('createImage', {imagefile: imagefile, product_id: item.id})
         .then(() => {
           this.hasError = false
           this.$router.push({name: 'AddsList'})
