@@ -1,6 +1,6 @@
 <template>
   <v-layout justify-center>
-    <v-flex xs12 sm10 md8 lg8>
+    <v-flex xs10 sm10 md10 lg10>
       <v-card>
         <v-form ref="form" v-model="valid" lazy-validation enctype="multipart/form-data">
           <v-toolbar color="grey darken-3">
@@ -34,6 +34,12 @@
                   :rules="descriptionRules"
                   ></v-text-field>
               </v-flex>
+              <template v-if="item.path != null">
+              <img v-bind:src="currentImage">
+              </template>
+              <template v-else>
+                <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" height="150px" alt="Icon No Free Png"/>
+              </template>
 
               <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
                 <img :src="imageUrl" height="150" v-if="imageUrl"/>
@@ -94,34 +100,39 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'AddForm',
-  data: () => ({
-    dialog: false,
-    name: '',
-    nameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 30) || 'Product Name must be less than 255 characters'
-    ],
-    description: '',
-    descriptionRules: [
-      v => !!v || 'Description is required',
-      v => (v && v.length <= 1000) || 'Product Description must be less than 1000 characters'
-    ],
-    price: '',
-    priceRules: [
-      v => !!v || 'Price is required',
-      v => (v && v.length <= 20) || 'Price must be less than 20 digits',
-      v => /^[-+]?[0-9]*[.,]?[0-9]+(?:[eE][-+]?[0-9]+)?$/.test(v) || 'Price must be digit'
-    ],
-    valid: true,
-    hasError: false,
-    imageName: '',
-    imageUrl: '',
-    imagefile: ''
-  }),
+  data: () => {
+    return {
+      dialog: false,
+      name: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 30) || 'Product Name must be less than 255 characters'
+      ],
+      description: '',
+      descriptionRules: [
+        v => !!v || 'Description is required',
+        v => (v && v.length <= 1000) || 'Product Description must be less than 1000 characters'
+      ],
+      price: '',
+      priceRules: [
+        v => !!v || 'Price is required',
+        v => (v && v.length <= 20) || 'Price must be less than 20 digits',
+        v => /^[-+]?[0-9]*[.,]?[0-9]+(?:[eE][-+]?[0-9]+)?$/.test(v) || 'Price must be digit'
+      ],
+      valid: true,
+      hasError: false,
+      imageName: '',
+      imageUrl: '',
+      imagefile: ''
+    }
+  },
   computed: {
     ...mapState('products', {
       item: 'addItem'
-    })
+    }),
+    currentImage () {
+      return process.env.apiUrl + '/uploads/' + this.item.path
+    }
   },
   methods: {
     save: function () {
@@ -135,7 +146,7 @@ export default {
           filename: this.imageName,
           body: this.imageUrl
         }
-      } /* @TODO solve user_id */
+      }
       console.log(params)
       this.$store.dispatch('products/create', params)
         .then(() => {
@@ -148,7 +159,18 @@ export default {
         })
     },
     update: function () {
-      var params = {id: this.item.id, formData: {name: this.item.name, description: this.item.description, price: this.item.price}}
+      var params = {
+        id: this.item.id,
+        formData: {
+          name: this.item.name,
+          description: this.item.description,
+          price: this.item.price
+        },
+        image: {
+          filename: this.imageName,
+          body: this.imageUrl
+        }
+      }
       this.$store.dispatch('products/update', params)
         .then(() => {
           this.$router.push({name: 'AddsList'})
@@ -175,9 +197,6 @@ export default {
         fr.addEventListener('load', () => {
           this.imageUrl = fr.result
           this.imageFile = files[0] // this is an image file that can be sent to server...
-          // console.log(this.imageUrl)
-          // console.log(this.imageFile)
-          // console.log(this.imageName)
         })
       } else {
         this.imageName = ''

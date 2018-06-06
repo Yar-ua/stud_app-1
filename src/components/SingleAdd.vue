@@ -1,3 +1,4 @@
+<!--
 <template>
   <div class="hello">
     <h1>Single Add page</h1>
@@ -9,6 +10,179 @@ export default {
   name: 'SingleAdd',
   data () {
     return {
+    }
+  }
+}
+</script>
+-->
+
+<template>
+  <v-layout justify-center>
+    <v-flex xs12 sm10 md8 lg8>
+      <v-card>
+        <v-form ref="form" v-model="valid" lazy-validation enctype="multipart/form-data">
+          <v-toolbar color="grey darken-3">
+            <v-toolbar-title class="white--text">Create or update product</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+          <v-card-text>
+          <v-container grid-list-md>
+            <v-layout row wrap>
+              <v-flex xs12 sm6>
+                <p>{{ item.name }}</p>
+              </v-flex>
+              <v-flex xs12 sm6>
+                <p>{{ item.price }} $</p>
+              </v-flex>
+              <v-flex xs12>
+                <p>{{ item.description }}</p>
+              </v-flex>
+
+              <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+                <img :src="imageUrl" height="150" v-if="imageUrl"/>
+              </v-flex>
+            </v-layout>
+          </v-container>
+
+          </v-card-text>
+          <v-divider class="mt-5"></v-divider>
+          <v-card-actions>
+            <v-btn :to="{name: 'AddsList'}">Cancel</v-btn>
+            <v-spacer></v-spacer>
+            <v-slide-x-reverse-transition>
+            </v-slide-x-reverse-transition>
+            <template v-if="this.$route.params.id == 'new'">
+              <v-btn
+              color="primary"
+              :disabled="!valid"
+              @click="save"
+              >
+              SAVE PRODUCT
+              </v-btn>
+            </template>
+            <template v-if="this.$route.params.id !== 'new'">
+              <v-btn
+              color="primary"
+              :disabled="!valid"
+              @click="update"
+              >
+              UPDATE PRODUCT
+              </v-btn>
+              <v-btn
+              color="error"
+              :disabled="!valid"
+              @click="destroy"
+              >
+              DELETE PRODUCT
+              </v-btn>
+            </template>
+          </v-card-actions>
+        </v-form>
+      </v-card>
+    </v-flex>
+  </v-layout>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+  name: 'AddForm',
+  data: () => ({
+    dialog: false,
+    name: '',
+    nameRules: [
+      v => !!v || 'Name is required',
+      v => (v && v.length <= 30) || 'Product Name must be less than 255 characters'
+    ],
+    description: '',
+    descriptionRules: [
+      v => !!v || 'Description is required',
+      v => (v && v.length <= 1000) || 'Product Description must be less than 1000 characters'
+    ],
+    price: '',
+    priceRules: [
+      v => !!v || 'Price is required',
+      v => (v && v.length <= 20) || 'Price must be less than 20 digits',
+      v => /^[-+]?[0-9]*[.,]?[0-9]+(?:[eE][-+]?[0-9]+)?$/.test(v) || 'Price must be digit'
+    ],
+    valid: true,
+    hasError: false,
+    imageName: '',
+    imageUrl: '',
+    imagefile: ''
+  }),
+  computed: {
+    ...mapState('products', {
+      item: 'addItem'
+    })
+  },
+  methods: {
+    save: function () {
+      var params = {
+        formData: {
+          name: this.item.name,
+          description: this.item.description,
+          price: this.item.price
+        },
+        image: {
+          filename: this.imageName,
+          body: this.imageUrl
+        }
+      } /* @TODO solve user_id */
+      console.log(params)
+      this.$store.dispatch('products/create', params)
+        .then(() => {
+          this.hasError = false
+          this.$router.push({name: 'AddsList'})
+        }).catch(err => {
+          if (err.response.status !== 200) {
+            this.hasError = true
+          }
+        })
+    },
+    update: function () {
+      var params = {id: this.item.id, formData: {name: this.item.name, description: this.item.description, price: this.item.price}}
+      this.$store.dispatch('products/update', params)
+        .then(() => {
+          this.$router.push({name: 'AddsList'})
+        })
+    },
+    destroy: function () {
+      this.$store.dispatch('products/delete', {id: this.item.id})
+        .then(() => {
+          this.$router.push({name: 'AddsList'})
+        })
+    },
+    pickFile () {
+      this.$refs.image.click()
+    },
+    onFilePicked (e) {
+      const files = e.target.files
+      if (files[0] !== undefined) {
+        this.imageName = files[0].name
+        if (this.imageName.lastIndexOf('.') <= 0) {
+          return
+        }
+        const fr = new FileReader()
+        fr.readAsDataURL(files[0])
+        fr.addEventListener('load', () => {
+          this.imageUrl = fr.result
+          this.imageFile = files[0] // this is an image file that can be sent to server...
+        })
+      } else {
+        this.imageName = ''
+        this.imageFile = ''
+        this.imageUrl = ''
+      }
+    }
+  },
+
+  created () {
+    if (this.$route.params.id !== 'new') {
+      this.$store.dispatch('products/show', {id: this.$route.params.id})
+    } else {
+      this.$store.dispatch('products/resetAddItem')
     }
   }
 }

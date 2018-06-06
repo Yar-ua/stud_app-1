@@ -27,24 +27,29 @@
             <v-card color="blue-grey darken-1" class="white--text">
               <v-container fluid grid-list-lg>
                 <v-layout row>
-                  <v-flex xs7>
+                  <v-flex>
                     <div>
+                      <div> {{ item }} </div>
                       <div class="headline">{{ item.name }}</div>
                       <div>{{ item.description }}</div>
                       <div>{{ item.price }} $</div>
                       <v-card-actions>
-                        <v-btn flat dark :to="{name: 'AddForm', params: {id: item.id}}">See more</v-btn>
-                        <v-btn flat dark :to="{name: 'AddForm', params: {id: item.id}}">Edit product</v-btn>
-                        <v-btn  dark :to="{name: 'AddForm', params: {id: item.id}}">Add to cart</v-btn>
+                        <v-btn flat dark :to="{name: 'SingleAdd', params: {id: item.id}}">See more</v-btn>
+                        <v-btn dark :to="{name: 'AddForm', params: {id: item.id}}">Edit product</v-btn>
                       </v-card-actions>
                     </div>
                   </v-flex>
                   <v-flex xs5>
-                    <v-card-media
-                      :src=item.image
-                      height="125px"
-                      contain
-                    ></v-card-media>
+                    <template v-if="item.path != null">
+                      <v-card-media
+                        :src=imagePrefix+item.path
+                        height="125px"
+                        contain
+                      ></v-card-media>
+                    </template>
+                    <template v-else>
+                      <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" height="150px" alt="Icon No Free Png" />
+                    </template>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -65,7 +70,8 @@ export default {
     return {
       msg: 'Welcome to ProductList',
       limit: 10,
-      page: 1
+      page: 1,
+      imagePrefix: process.env.apiUrl + '/uploads/'
     }
   },
 
