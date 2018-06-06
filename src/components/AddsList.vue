@@ -34,8 +34,12 @@
                       <div>{{ item.description }}</div>
                       <div>{{ item.price }} $</div>
                       <v-card-actions>
-                        <v-btn flat dark :to="{name: 'SingleAdd', params: {id: item.id}}">See more</v-btn>
-                        <v-btn dark :to="{name: 'AddForm', params: {id: item.id}}">Edit product</v-btn>
+                        <template v-if="item.user_id != currentUserId">
+                          <v-btn flat dark :to="{name: 'SingleAdd', params: {id: item.id}}">not seller</v-btn>
+                        </template>
+                        <template v-else>
+                          <v-btn dark :to="{name: 'AddForm', params: {id: item.id}}">seller</v-btn>
+                        </template>
                       </v-card-actions>
                     </div>
                   </v-flex>
@@ -81,7 +85,10 @@ export default {
     }),
     ...mapState({
       auth: 'isAuth'
-    })
+    }),
+    currentUserId () {
+      return localStorage.id
+    }
   },
 
   created () {

@@ -35,7 +35,7 @@
                   ></v-text-field>
               </v-flex>
               <template v-if="item.path != null">
-              <img v-bind:src="currentImage">
+                <img v-bind:src="currentImage">
               </template>
               <template v-else>
                 <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" height="150px" alt="Icon No Free Png"/>
