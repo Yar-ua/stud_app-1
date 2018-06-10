@@ -9,7 +9,6 @@
           </v-toolbar>
           <v-card-text>
           <v-container grid-list-md>
-          <div>{{ item }}</div>
             <v-layout row wrap>
               <v-flex xs12 sm6>
                 <v-text-field
@@ -112,7 +111,7 @@ export default {
       description: '',
       descriptionRules: [
         v => !!v || 'Description is required',
-        v => (v && v.length <= 1000) || 'Product Description must be less than 1000 characters'
+        v => (v && v.length <= 5000) || 'Product Description must be less than 5000 characters'
       ],
       price: '',
       priceRules: [
@@ -207,11 +206,7 @@ export default {
   },
 
   created () {
-    if (this.$route.params.id !== 'new') {
-      this.$store.dispatch('products/show', {id: this.$route.params.id})
-    } else {
-      this.$store.dispatch('products/resetAddItem')
-    }
+    this.$store.dispatch('products/show', {id: this.$route.params.id})
   }
 }
 </script>

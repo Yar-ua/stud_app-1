@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="e3"
-    style="width: 80%; margin: auto;"
-    class="grey lighten-3"
-  >
+  <div id="AddsList" class="grey lighten-3">
     <v-toolbar color="grey darken-3">
       <v-toolbar-title class="white--text">Our products</v-toolbar-title>
       <v-spacer></v-spacer>

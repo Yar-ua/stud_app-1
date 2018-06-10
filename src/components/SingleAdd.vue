@@ -10,12 +10,11 @@
           <v-card-text>
           <v-container grid-list-md>
             <v-layout row wrap>
-            <v-flex>
+            <v-flex justify-start xs6>
               <p>Product:</p>
               <p>Prod. name: {{ item.name }}</p>
               <p>Price: {{ item.price }} $</p>
               <p>Description: {{ item.description }}</p>
-              {{ item }}
             </v-flex>
             <v-flex>
             <p>Seller:</p>

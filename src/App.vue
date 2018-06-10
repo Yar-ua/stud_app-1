@@ -20,12 +20,6 @@ import Header from '@/components/Header'
 
 export default {
   name: 'App',
-  data: () => ({
-    drawer: false
-  }),
-  props: {
-    source: String
-  },
   components: {
     'app-header': Header
   },

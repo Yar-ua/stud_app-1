@@ -56,9 +56,6 @@ export default {
   data: () => ({
     drawer: false
   }),
-  props: {
-    source: String
-  },
   computed: {
     ...mapState({
       isAuth: 'isAuth',

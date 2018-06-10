@@ -4,20 +4,7 @@ import API from './api'
 export default {
   namespaced: true,
   state: {
-    addsList: [
-      {
-        id: '1',
-        name: 'test1'
-      },
-      {
-        id: '2',
-        name: 'test2'
-      },
-      {
-        id: '3',
-        name: 'test3'
-      }
-    ],
+    addsList: [],
     addItem: {},
     user: {},
     token: {},
@@ -46,9 +33,6 @@ export default {
     setList (context, params) {
       context.commit('updateAddsList', params.data)
     },
-    resetAddItem (context) {
-      context.commit('updateAddItem', {id: '', name: '', description: '', price: '', image: ''})
-    },
     index (context) {
       return axios.get(API.products, '')
         .then(response => {
@@ -56,13 +40,17 @@ export default {
         })
     },
     show (context, params) {
-      return axios.get(API.product(params.id), '')
-        .then(response => {
-          let editedItem = {}
-          Object.assign(editedItem, response.data)
-          context.commit('updateAddItem', editedItem)
-          context.commit('getImage', response.data.path)
-        })
+      if (params.id === 'new') {
+        context.commit('updateAddItem', {id: '', name: '', description: '', price: '', image: ''})
+      } else {
+        return axios.get(API.product(params.id), '')
+          .then(response => {
+            let editedItem = {}
+            Object.assign(editedItem, response.data)
+            context.commit('updateAddItem', editedItem)
+            context.commit('getImage', response.data.path)
+          })
+      }
     },
     create (context, params) {
       return axios.post(API.products, params)
