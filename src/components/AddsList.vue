@@ -29,7 +29,6 @@
                 <v-layout row>
                   <v-flex>
                     <div>
-                      <div> {{ item }} </div>
                       <div class="headline">{{ item.name }}</div>
                       <div>{{ item.description }}</div>
                       <div>{{ item.price }} $</div>

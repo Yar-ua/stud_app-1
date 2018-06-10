@@ -84,7 +84,7 @@ export default {
     login: '',
     loginRules: [
       v => !!v || 'Login is required',
-      v => (v && v.length <= 30) || 'Login must be less than 50 characters'
+      v => (v && v.length <= 30) || 'Login must be less than 30 characters'
     ],
     email: '',
     emailRules: [
@@ -123,7 +123,6 @@ export default {
               this.hasError = true
             }
           })
-        /* console.log(this.login, this.email, this.password, this.repassword) */
       }
     }
   },

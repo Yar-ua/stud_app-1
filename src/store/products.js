@@ -21,7 +21,8 @@ export default {
     addItem: {},
     user: {},
     token: {},
-    isAuth: !!localStorage.isAuth
+    isAuth: !!localStorage.isAuth,
+    image: {}
   },
 
   mutations: {
@@ -30,6 +31,14 @@ export default {
     },
     updateAddItem (state, data) {
       state.addItem = data
+      if (data.path == null) {
+        state.addItem.imageUrl = null
+      } else {
+        state.addItem.imageUrl = process.env.apiUrl + '/uploads/' + data.path
+      }
+    },
+    getImage (state, data) {
+      state.image = process.env.apiUrl + '/uploads/' + data
     }
   },
 
@@ -38,7 +47,7 @@ export default {
       context.commit('updateAddsList', params.data)
     },
     resetAddItem (context) {
-      context.commit('updateAddItem', {id: '', name: '', description: '', price: ''})
+      context.commit('updateAddItem', {id: '', name: '', description: '', price: '', image: ''})
     },
     index (context) {
       return axios.get(API.products, '')
@@ -47,13 +56,13 @@ export default {
         })
     },
     show (context, params) {
-      context.state.addsList.forEach(item => {
-        if (item.id === params.id) {
+      return axios.get(API.product(params.id), '')
+        .then(response => {
           let editedItem = {}
-          Object.assign(editedItem, item)
+          Object.assign(editedItem, response.data)
           context.commit('updateAddItem', editedItem)
-        }
-      })
+          context.commit('getImage', response.data.path)
+        })
     },
     create (context, params) {
       return axios.post(API.products, params)

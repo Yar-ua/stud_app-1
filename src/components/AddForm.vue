@@ -9,6 +9,7 @@
           </v-toolbar>
           <v-card-text>
           <v-container grid-list-md>
+          <div>{{ item }}</div>
             <v-layout row wrap>
               <v-flex xs12 sm6>
                 <v-text-field
@@ -34,8 +35,8 @@
                   :rules="descriptionRules"
                   ></v-text-field>
               </v-flex>
-              <template v-if="item.path != null">
-                <img v-bind:src="currentImage">
+              <template v-if="item.imageUrl != null">
+                <img v-bind:src="item.imageUrl">
               </template>
               <template v-else>
                 <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" height="150px" alt="Icon No Free Png"/>
@@ -106,7 +107,7 @@ export default {
       name: '',
       nameRules: [
         v => !!v || 'Name is required',
-        v => (v && v.length <= 30) || 'Product Name must be less than 255 characters'
+        v => (v && v.length <= 255) || 'Product Name must be less than 255 characters'
       ],
       description: '',
       descriptionRules: [
@@ -147,7 +148,6 @@ export default {
           body: this.imageUrl
         }
       }
-      console.log(params)
       this.$store.dispatch('products/create', params)
         .then(() => {
           this.hasError = false

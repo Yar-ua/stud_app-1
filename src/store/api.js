@@ -1,15 +1,16 @@
 export default {
-  /* post /login */
+  /* POST /login */
   login: process.env.apiUrl + '/login',
-  /* get /logout */
+  /* GET /logout */
   logout: process.env.apiUrl + '/logout',
-  /* post /register */
+  /* POST /register */
   register: process.env.apiUrl + '/register',
-  /* get /products (getting product list) */
-  /* post /products (creating product) */
+  /* GET /products (getting product list) */
+  /* POST /products (creating product) */
   products: process.env.apiUrl + '/products',
-  /* put /products/:id (updating product) */
-  /* delete /products/:id (deleting product) */
+  /* GET /products/:id (show product) */
+  /* PUT /products/:id (updating product) */
+  /* DELETE /products/:id (deleting product) */
   product: (productId) => (process.env.apiUrl + '/products/#{id}').replace('#{id}', productId),
   /*  */
   images: process.env.apiUrl + '/images'

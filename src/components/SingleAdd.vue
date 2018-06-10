@@ -4,23 +4,27 @@
       <v-card>
         <v-form ref="form" v-model="valid" lazy-validation enctype="multipart/form-data">
           <v-toolbar color="grey darken-3">
-            <v-toolbar-title class="white--text">Create or update product</v-toolbar-title>
+            <v-toolbar-title class="white--text">Product info</v-toolbar-title>
             <v-spacer></v-spacer>
           </v-toolbar>
           <v-card-text>
           <v-container grid-list-md>
             <v-layout row wrap>
-              <v-flex xs12 sm6>
-                <p>{{ item.name }}</p>
-              </v-flex>
-              <v-flex xs12 sm6>
-                <p>{{ item.price }} $</p>
-              </v-flex>
-              <v-flex xs12>
-                <p>{{ item.description }}</p>
-              </v-flex>
-              <template v-if="item.path != null">
-                <img v-bind:src="currentImage">
+            <v-flex>
+              <p>Product:</p>
+              <p>Prod. name: {{ item.name }}</p>
+              <p>Price: {{ item.price }} $</p>
+              <p>Description: {{ item.description }}</p>
+              {{ item }}
+            </v-flex>
+            <v-flex>
+            <p>Seller:</p>
+              <p>Name: {{ item.user_login }}</p>
+              <p>Phone: {{ item.user_phone }}</p>
+              <p>Email: {{ item.user_email }}</p>
+            </v-flex>
+              <template v-if="item.imageUrl != null">
+                <img v-bind:src="item.imageUrl">
               </template>
               <template v-else>
                 <img src="https://www.freeiconspng.com/uploads/no-image-icon-11.PNG" height="150px" alt="Icon No Free Png"/>
@@ -74,10 +78,11 @@ export default {
   computed: {
     ...mapState('products', {
       item: 'addItem'
-    }),
-    currentImage () {
-      return process.env.apiUrl + '/uploads/' + this.item.path
-    }
+    })
+  },
+
+  created () {
+    this.$store.dispatch('products/show', {id: this.$route.params.id})
   }
 }
 </script>

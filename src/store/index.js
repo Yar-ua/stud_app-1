@@ -42,10 +42,8 @@ const Store = new Vuex.Store({
         })
     },
     register (context, params) {
-      console.log(params)
       return axios.post(API.register, params)
         .then(response => {
-          console.log('logout')
           context.commit('updateUser', response.data)
           context.commit('updateToken', response.data.token)
           context.commit('updateAuth', true)
@@ -70,14 +68,6 @@ axios.interceptors.request.use(function (config) {
   return config
 }, function (error) {
   // Do something with request error
-  return Promise.reject(error)
-})
-// Add a response interceptor
-axios.interceptors.response.use(function (response) {
-  // Do something with response data
-  return response
-}, function (error) {
-  // Do something with response error
   return Promise.reject(error)
 })
 

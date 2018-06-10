@@ -58,7 +58,7 @@ export default {
     login: '',
     loginRules: [
       v => !!v || 'Login is required',
-      v => (v && v.length <= 30) || 'Login must be less than 50 characters'
+      v => (v && v.length <= 30) || 'Login must be less than 30 characters'
     ],
     password: '',
     passwordRules: [
