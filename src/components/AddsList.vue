@@ -2,13 +2,10 @@
   <div id="AddsList" class="grey lighten-3">
     <v-toolbar color="grey darken-3">
       <v-toolbar-title class="white--text">Our products</v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer>name || price || date</v-spacer>
       <template v-if="auth">
         <v-btn color="red darken-3" :to="{name: 'AddForm', params: {id: 'new'}}">Create new product</v-btn>
       </template>
-      <v-btn icon>
-        <v-icon>search</v-icon>
-      </v-btn>
       <v-card-actions>
       </v-card-actions>
     </v-toolbar>
@@ -29,7 +26,7 @@
                       <div>{{ item.description }}</div>
                       <div>{{ item.price }} $</div>
                       <v-card-actions>
-                        <template v-if="item.user_id != currentUserId">
+                        <template v-if="item.user_id != user.id">
                           <v-btn flat dark :to="{name: 'SingleAdd', params: {id: item.id}}">not seller</v-btn>
                         </template>
                         <template v-else>
@@ -70,7 +67,9 @@ export default {
       msg: 'Welcome to ProductList',
       limit: 10,
       page: 1,
-      imagePrefix: process.env.apiUrl + '/uploads/'
+      imagePrefix: process.env.apiUrl + '/uploads/',
+      type: '',
+      sort: ''
     }
   },
 
@@ -79,11 +78,9 @@ export default {
       list: 'addsList'
     }),
     ...mapState({
-      auth: 'isAuth'
-    }),
-    currentUserId () {
-      return localStorage.id
-    }
+      auth: 'isAuth',
+      user: 'user'
+    })
   },
 
   created () {

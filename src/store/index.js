@@ -9,8 +9,11 @@ Vue.use(Vuex)
 
 const Store = new Vuex.Store({
   state: {
-    user: {},
-    token: {},
+    user: {
+      id: localStorage.id ? localStorage.id : '',
+      user: localStorage.user ? localStorage.user : '',
+      token: localStorage.token ? localStorage.token : ''
+    },
     isAuth: !!localStorage.isAuth
   },
   modules: {
@@ -22,13 +25,14 @@ const Store = new Vuex.Store({
       state.isAuth = data
     },
     updateUser (state, data) {
-      localStorage.user = data.login
       localStorage.id = data.id
-      state.user = data.login
-    },
-    updateToken (state, data) {
-      localStorage.token = data
-      state.token = data
+      localStorage.user = data.login
+      localStorage.token = data.token
+      state.user = {
+        id: data.id,
+        user: data.login,
+        token: data.token
+      }
     }
   },
 
@@ -37,7 +41,6 @@ const Store = new Vuex.Store({
       return axios.post(API.login, params)
         .then(response => {
           context.commit('updateUser', response.data)
-          context.commit('updateToken', response.data.token)
           context.commit('updateAuth', true)
         })
     },
@@ -45,15 +48,13 @@ const Store = new Vuex.Store({
       return axios.post(API.register, params)
         .then(response => {
           context.commit('updateUser', response.data)
-          context.commit('updateToken', response.data.token)
           context.commit('updateAuth', true)
         })
     },
     logout (context) {
       return axios.get(API.logout, '')
         .then(response => {
-          context.commit('updateUser', '')
-          context.commit('updateToken', '')
+          context.commit('updateUser', {id: '', login: '', token: ''})
           context.commit('updateAuth', false)
           localStorage.clear()
         })

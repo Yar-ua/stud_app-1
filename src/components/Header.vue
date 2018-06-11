@@ -39,7 +39,7 @@
         </template>
         <template v-if="isAuth">
           <v-btn flat>
-            User: {{ user }}
+            User login: {{ user.user }}
           </v-btn>
           <v-btn flat @click="logoutAction">Logout</v-btn>
         </template>
