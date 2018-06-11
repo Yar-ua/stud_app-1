@@ -7,7 +7,7 @@ export default {
   register: process.env.apiUrl + '/register',
   /* GET /products (getting product list) */
   /* POST /products (creating product) */
-  products: process.env.apiUrl + '/products',
+  products: (path) => (process.env.apiUrl + '/products?type=' + path.type + '&sort=' + path.sort),
   /* GET /products/:id (show product) */
   /* PUT /products/:id (updating product) */
   /* DELETE /products/:id (deleting product) */

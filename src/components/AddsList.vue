@@ -3,12 +3,44 @@
     <v-toolbar color="grey darken-3">
       <v-toolbar-title class="white--text">Our products</v-toolbar-title>
       <v-spacer>
-        name
-        ||
-        price
-        ||
-        date
-        </v-spacer>
+        <v-flex xs12 sm6 class="py-2">
+          <v-btn-toggle v-model="type" mandatory> {{ type }}
+            <v-btn flat value="name" @click="setSort">
+              by name
+              <template v-if="this.type === 'name'">
+                <template v-if="this.sort === 'desc'">
+                  <i class="material-icons">keyboard_arrow_up</i>
+                </template>
+                <template v-else>
+                  <i class="material-icons">keyboard_arrow_down</i>
+                </template>
+              </template>
+            </v-btn>
+            <v-btn flat value="price" @click="setSort">
+              by price
+              <template v-if="this.type === 'price'">
+                <template v-if="this.sort === 'desc'">
+                  <i class="material-icons">keyboard_arrow_up</i>
+                </template>
+                <template v-else>
+                  <i class="material-icons">keyboard_arrow_down</i>
+                </template>
+              </template>
+            </v-btn>
+            <v-btn flat value="date" @click="setSort">
+              by date
+              <template v-if="this.type === 'date'">
+                <template v-if="this.sort === 'desc'">
+                  <i class="material-icons">keyboard_arrow_up</i>
+                </template>
+                <template v-else>
+                  <i class="material-icons">keyboard_arrow_down</i>
+                </template>
+              </template>
+            </v-btn>
+          </v-btn-toggle>
+        </v-flex>
+      </v-spacer>
       <template v-if="auth">
         <v-btn color="red darken-3" :to="{name: 'AddForm', params: {id: 'new'}}">Create new product</v-btn>
       </template>
@@ -32,10 +64,10 @@
                       <div>{{ item.price }} $</div>
                       <v-card-actions>
                         <template v-if="item.user_id != user.id">
-                          <v-btn flat dark :to="{name: 'SingleAdd', params: {id: item.id}}">not seller</v-btn>
+                          <v-btn flat outline dark :to="{name: 'SingleAdd', params: {id: item.id}}">product info</v-btn>
                         </template>
                         <template v-else>
-                          <v-btn dark :to="{name: 'AddForm', params: {id: item.id}}">seller</v-btn>
+                          <v-btn dark :to="{name: 'AddForm', params: {id: item.id}}">my product</v-btn>
                         </template>
                       </v-card-actions>
                     </div>
@@ -73,8 +105,8 @@ export default {
       limit: 10,
       page: 1,
       imagePrefix: process.env.apiUrl + '/uploads/',
-      type: '',
-      sort: ''
+      type: 'name',
+      sort: 'asc'
     }
   },
 
@@ -88,8 +120,17 @@ export default {
     })
   },
 
+  methods: {
+    setSort: function () {
+      (this.sort === 'asc') ? (this.sort = 'desc') : (this.sort = 'asc')
+      console.log(this.type, this.sort)
+      this.$store.dispatch('products/index', {type: this.type, sort: this.sort})
+    }
+
+  },
+
   created () {
-    this.$store.dispatch('products/index')
+    this.$store.dispatch('products/index', '')
   }
 }
 </script>

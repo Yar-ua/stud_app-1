@@ -30,8 +30,8 @@ export default {
     setList (context, params) {
       context.commit('updateAddsList', params.data)
     },
-    index (context) {
-      return axios.get(API.products, '')
+    index (context, params) {
+      return axios.get(API.products(params), '')
         .then(response => {
           context.commit('updateAddsList', response.data)
         })
