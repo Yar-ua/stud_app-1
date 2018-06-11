@@ -31,10 +31,6 @@ export default {
       this.$store.dispatch('logout', '')
         .then(() => {
           this.$router.push({name: 'AddsList'})
-        }).catch(err => {
-          if (err.response.status !== 200) {
-            this.hasError = true
-          }
         })
     }
   }

@@ -93,7 +93,7 @@ export default {
     phone: '',
     phoneRules: [
       v => !!v || 'Phone is required',
-      v => (v && v.length <= 20) || 'Phone No must be less than 10 digits',
+      v => (v && v.length <= 10) || 'Phone No must be less than 10 digits',
       v => /^[-+]?[0-9]*[.,]?[0-9]+(?:[eE][-+]?[0-9]+)?$/.test(v) || 'Phone No must be digit'],
     password: '',
     passwordRules: [

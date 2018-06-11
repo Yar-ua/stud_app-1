@@ -23,9 +23,6 @@ export default {
       } else {
         state.addItem.imageUrl = process.env.apiUrl + '/uploads/' + data.path
       }
-    },
-    getImage (state, data) {
-      state.image = process.env.apiUrl + '/uploads/' + data
     }
   },
 

@@ -2,7 +2,13 @@
   <div id="AddsList" class="grey lighten-3">
     <v-toolbar color="grey darken-3">
       <v-toolbar-title class="white--text">Our products</v-toolbar-title>
-      <v-spacer>name || price || date</v-spacer>
+      <v-spacer>
+        name
+        ||
+        price
+        ||
+        date
+        </v-spacer>
       <template v-if="auth">
         <v-btn color="red darken-3" :to="{name: 'AddForm', params: {id: 'new'}}">Create new product</v-btn>
       </template>
@@ -10,9 +16,8 @@
       </v-card-actions>
     </v-toolbar>
     <v-card>
-      <v-container
+      <v-container id="addsContainer"
         fluid
-        style="min-height: 0;"
         grid-list-lg
       >
         <v-layout row wrap>

@@ -129,10 +129,7 @@ export default {
   computed: {
     ...mapState('products', {
       item: 'addItem'
-    }),
-    currentImage () {
-      return process.env.apiUrl + '/uploads/' + this.item.path
-    }
+    })
   },
   methods: {
     save: function () {
