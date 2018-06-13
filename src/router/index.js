@@ -27,17 +27,17 @@ export default new Router({
       component: Register
     },
     {
-      path: '/add:id(\\d+)',
+      path: '/products/:id(\\d+)/proview',
       name: 'SingleAdd',
       component: SingleAdd
     },
     {
-      path: '/:id(\\d+)',
+      path: '/products/:id(\\d+|new)',
       name: 'AddForm',
       component: AddForm
     },
     {
-      path: '*',
+      path: 'Page404',
       name: 'Page404',
       component: Page404
     }

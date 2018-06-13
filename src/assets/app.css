@@ -6,3 +6,18 @@
   color: #2c3e50;
   margin-top: 60px;
 }
+
+#logo {
+	height: 100px;
+	width: 100px;
+	margin-top: 20px;
+}
+
+#AddsList {
+  width: 90%;
+  margin: auto;
+}
+
+#addsContainer {
+  min-height: 0px;
+}
