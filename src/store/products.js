@@ -9,12 +9,14 @@ export default {
     user: {},
     token: {},
     isAuth: !!localStorage.isAuth,
-    image: {}
+    image: {},
+    count: ''
   },
 
   mutations: {
     updateAddsList (state, data) {
-      state.addsList = data
+      state.addsList = data.products
+      state.count = data.count.count
     },
     updateAddItem (state, data) {
       state.addItem = data

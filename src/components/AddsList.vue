@@ -89,6 +89,11 @@
             </v-card>
           </v-flex>
         </v-layout>
+        <template>
+        <div class="text-xs-center">
+          <v-pagination :length=pages v-model="page" @click="setSort"></v-pagination>
+        </div>
+      </template>
       </v-container>
     </v-card>
   </div>
@@ -102,29 +107,39 @@ export default {
   data () {
     return {
       msg: 'Welcome to ProductList',
-      limit: 10,
-      page: 1,
       imagePrefix: process.env.apiUrl + '/uploads/',
-      type: 'name',
+      page: 1,
+      limit: 10,
+      type: '',
       sort: 'asc'
     }
   },
 
   computed: {
     ...mapState('products', {
-      list: 'addsList'
+      list: 'addsList',
+      count: 'count'
     }),
     ...mapState({
       auth: 'isAuth',
       user: 'user'
-    })
+    }),
+    pages: function () {
+      return Math.ceil(this.list.length / 10)
+    }
   },
 
   methods: {
     setSort: function () {
       (this.sort === 'asc') ? (this.sort = 'desc') : (this.sort = 'asc')
-      console.log(this.type, this.sort)
-      this.$store.dispatch('products/index', {type: this.type, sort: this.sort})
+      console.log(this.type, this.sort, this.page, count)
+      this.$store.dispatch('products/index',
+        {
+          page: this.page,
+          type: this.type,
+          sort: this.sort
+        }
+      )
     }
 
   },
