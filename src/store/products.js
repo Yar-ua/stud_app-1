@@ -16,7 +16,7 @@ export default {
   mutations: {
     updateAddsList (state, data) {
       state.addsList = data.products
-      state.count = data.count.count
+      state.count = data.count.value
     },
     updateAddItem (state, data) {
       state.addItem = data
