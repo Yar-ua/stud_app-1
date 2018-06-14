@@ -12,7 +12,5 @@ export default {
   /* GET /products/:id (show product) */
   /* PUT /products/:id (updating product) */
   /* DELETE /products/:id (deleting product) */
-  product: (productId) => (process.env.apiUrl + '/products/#{id}').replace('#{id}', productId),
-  /*  */
-  images: process.env.apiUrl + '/images'
+  product: (productId) => (process.env.apiUrl + '/products/#{id}').replace('#{id}', productId)
 }

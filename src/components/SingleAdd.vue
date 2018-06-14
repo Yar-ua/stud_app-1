@@ -70,9 +70,7 @@ export default {
     ],
     valid: true,
     hasError: false,
-    imageName: '',
-    imageUrl: '',
-    imagefile: ''
+    imageUrl: ''
   }),
   computed: {
     ...mapState('products', {

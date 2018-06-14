@@ -4,8 +4,8 @@
       <v-toolbar-title class="white--text">Our products</v-toolbar-title>
       <v-spacer>
         <v-flex xs12 sm6 class="py-2">
-          <v-btn-toggle v-model="type" mandatory>
-            <v-btn flat value="name" @click="setSort">
+          <v-btn-toggle v-model="type">
+            <v-btn flat value="name" @click="sortItems">
               by name
               <template v-if="this.type === 'name'">
                 <template v-if="this.sort === 'desc'">
@@ -16,7 +16,7 @@
                 </template>
               </template>
             </v-btn>
-            <v-btn flat value="price" @click="setSort">
+            <v-btn flat value="price" @click="sortItems">
               by price
               <template v-if="this.type === 'price'">
                 <template v-if="this.sort === 'desc'">
@@ -27,7 +27,7 @@
                 </template>
               </template>
             </v-btn>
-            <v-btn flat value="date" @click="setSort">
+            <v-btn flat value="date" @click="sortItems">
               by date
               <template v-if="this.type === 'date'">
                 <template v-if="this.sort === 'desc'">
@@ -42,7 +42,9 @@
         </v-flex>
       </v-spacer>
       <template v-if="auth">
-        <v-btn color="red darken-3" :to="{name: 'AddForm', params: {id: 'new'}}">Create new product</v-btn>
+        <v-btn color="red darken-3" :to="{name: 'AddForm', params: {id: 'new'}}">
+          Create new product
+        </v-btn>
       </template>
       <v-card-actions>
       </v-card-actions>
@@ -132,13 +134,31 @@ export default {
   },
 
   methods: {
-    setSort: function () {
-      (this.sort === 'asc') ? (this.sort = 'desc') : (this.sort = 'asc')
+    sortItems: function () {
+      console.log('type: ', this.type)
+      if (this.sort === 'asc') {
+        this.sort = 'desc'
+      } else {
+        this.sort = 'asc'
+      }
+      history.pushState('', '', '/' + this.page + '/' + this.type + '/' + this.sort)
       this.sendRequest()
     },
     next: function () {
+      history.pushState('', 'title', '/' + this.page + '/' + this.type + '/' + this.sort)
       this.sendRequest()
     },
+
+    setPage: function () {
+      (this.$route.params.page === undefined) ? (this.page = 1) : (this.page = parseInt(this.$route.params.page))
+    },
+    setType: function () {
+      (this.$route.params.type === undefined) ? (this.type = 'name') : (this.name = (this.$route.params.name))
+    },
+    setSort: function () {
+      (this.$route.params.sort === undefined) ? (this.sort = 'asc') : (this.sort = this.$route.params.sort)
+    },
+
     sendRequest: function () {
       var params = {
         page: this.page,
@@ -150,6 +170,11 @@ export default {
   },
 
   created () {
+    this.setPage()
+    this.setType()
+    this.setSort()
+    history.pushState('', '', '/' + this.page + '/' + this.type + '/' + this.sort)
+    console.log(this.page, this.type, this.sort)
     this.sendRequest()
   }
 }
