@@ -169,7 +169,7 @@ export default {
       }
       this.$store.dispatch('products/update', params)
         .then(() => {
-          this.$router.push({name: 'AddsList'})
+          this.$router.push({name: 'AddItem', params: {id: this.item.id, preview: 'preview'}})
         })
     },
     destroy: function () {

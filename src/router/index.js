@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import SingleAdd from '@/components/SingleAdd'
 import AddForm from '@/components/AddForm'
+import AddItem from '@/components/AddItem'
 import Page404 from '@/components/Page404'
 
 Vue.use(Router)
@@ -27,7 +28,7 @@ export default new Router({
       component: Register
     },
     {
-      path: '/products/:id(\\d+)/proview',
+      path: '/products/:id(\\d+)/:preview?',
       name: 'SingleAdd',
       component: SingleAdd
     },
@@ -35,6 +36,11 @@ export default new Router({
       path: '/products/:id(\\d+|new)',
       name: 'AddForm',
       component: AddForm
+    },
+    {
+      path: '/products/:id(\\d+)/:preview?',
+      name: 'AddItem',
+      component: AddItem
     },
     {
       path: 'Page404',

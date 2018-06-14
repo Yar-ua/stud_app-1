@@ -4,7 +4,7 @@
       <v-toolbar-title class="white--text">Our products</v-toolbar-title>
       <v-spacer>
         <v-flex xs12 sm6 class="py-2">
-          <v-btn-toggle v-model="type">
+          <v-btn-toggle v-model="type" mandatory>
             <v-btn flat value="name" @click="sortItems">
               by name
               <template v-if="this.type === 'name'">
@@ -68,6 +68,9 @@
                     <div>{{ item.description }}</div>
                     <div>{{ item.price }} $</div>
                     <v-card-actions>
+                      <!-- <template>
+                        <v-btn dark :to="{name: 'SingleAdd', params: {id: item.id}}">my product</v-btn>
+                      </template> -->
                       <template v-if="item.user_id != user.id">
                         <v-btn flat outline dark :to="{name: 'SingleAdd', params: {id: item.id}}">product info</v-btn>
                       </template>
@@ -135,7 +138,6 @@ export default {
 
   methods: {
     sortItems: function () {
-      console.log('type: ', this.type)
       if (this.sort === 'asc') {
         this.sort = 'desc'
       } else {
@@ -150,7 +152,7 @@ export default {
     },
 
     setPage: function () {
-      (this.$route.params.page === undefined) ? (this.page = 1) : (this.page = parseInt(this.$route.params.page))
+      ((this.$route.params.page === undefined) || isNaN(this.$route.params.page)) ? (this.page = 1) : (this.page = parseInt(this.$route.params.page))
     },
     setType: function () {
       (this.$route.params.type === undefined) ? (this.type = 'name') : (this.name = (this.$route.params.name))
@@ -174,8 +176,8 @@ export default {
     this.setType()
     this.setSort()
     history.pushState('', '', '/' + this.page + '/' + this.type + '/' + this.sort)
-    console.log(this.page, this.type, this.sort)
     this.sendRequest()
+    console.log(this.page, this.type, this.sort)
   }
 }
 </script>

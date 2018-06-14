@@ -33,7 +33,7 @@ export default {
       context.commit('updateAddsList', params.data)
     },
     index (context, params) {
-      return axios.get(API.products(params), '')
+      return axios.get(API.productsSort(params), '')
         .then(response => {
           context.commit('updateAddsList', response.data)
         })
@@ -47,7 +47,6 @@ export default {
             let editedItem = {}
             Object.assign(editedItem, response.data)
             context.commit('updateAddItem', editedItem)
-            context.commit('getImage', response.data.path)
           })
       }
     },
@@ -61,7 +60,6 @@ export default {
       return axios.put(API.product(params.id), params)
         .then(response => {
           if (response.data === true) {
-            /* TODO make successful alert */
           }
         })
     },
@@ -69,7 +67,6 @@ export default {
       return axios.delete(API.product(params.id), '')
         .then(response => {
           if (response.data === true) {
-            /* TODO make successful alert */
           }
         })
     }
