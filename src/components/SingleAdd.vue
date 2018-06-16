@@ -1,11 +1,7 @@
 <template>
   <div>
-    <template v-if="item.user_id === user.id">
-      <addform></addform>
-    </template>
-    <template v-else>
-      <additem></additem>
-    </template>
+    <addform v-if="item.user_id === user.id"></addform>
+    <additem v-else></additem>
   </div>
 </template>
 

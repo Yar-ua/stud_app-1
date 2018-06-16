@@ -58,17 +58,9 @@ export default {
     },
     update (context, params) {
       return axios.put(API.product(params.id), params)
-        .then(response => {
-          if (response.data === true) {
-          }
-        })
     },
     delete (context, params) {
       return axios.delete(API.product(params.id), '')
-        .then(response => {
-          if (response.data === true) {
-          }
-        })
     }
   }
 }

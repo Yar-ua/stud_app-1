@@ -25,14 +25,6 @@ export default {
   },
   computed: {
     ...mapState(['isAuth'])
-  },
-  methods: {
-    logoutAction: function () {
-      this.$store.dispatch('logout', '')
-        .then(() => {
-          this.$router.push({name: 'AddsList'})
-        })
-    }
   }
 }
 </script>

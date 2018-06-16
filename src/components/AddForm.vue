@@ -59,7 +59,7 @@
           </v-card-text>
           <v-divider class="mt-5"></v-divider>
           <v-card-actions>
-            <v-btn :to="{name: 'AddsList'}">Cancel</v-btn>
+            <v-btn :to="{name: 'AddsList'}">BACK</v-btn>
             <v-spacer></v-spacer>
             <v-slide-x-reverse-transition>
             </v-slide-x-reverse-transition>
@@ -147,11 +147,9 @@ export default {
       this.$store.dispatch('products/create', params)
         .then(() => {
           this.hasError = false
-          this.$router.push({name: 'AddsList'})
-        }).catch(err => {
-          if (err.response.status !== 200) {
-            this.hasError = true
-          }
+          console.log(this.item)
+          this.$router.push({name: 'SingleAdd', params: {id: this.item.id}})
+          // this.$router.push({name: 'AddsList'})
         })
     },
     update: function () {

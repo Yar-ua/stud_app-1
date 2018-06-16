@@ -68,9 +68,6 @@
                     <div>{{ item.description }}</div>
                     <div>{{ item.price }} $</div>
                     <v-card-actions>
-                      <!-- <template>
-                        <v-btn dark :to="{name: 'SingleAdd', params: {id: item.id}}">my product</v-btn>
-                      </template> -->
                       <template v-if="item.user_id != user.id">
                         <v-btn flat outline dark :to="{name: 'SingleAdd', params: {id: item.id}}">product info</v-btn>
                       </template>
@@ -138,35 +135,34 @@ export default {
 
   methods: {
     sortItems: function () {
-      if (this.sort === 'asc') {
-        this.sort = 'desc'
-      } else {
-        this.sort = 'asc'
-      }
-      history.pushState('', '', '/' + this.page + '/' + this.type + '/' + this.sort)
+      (this.sort === 'asc') ? (this.sort = 'desc') : (this.sort = 'asc')
+      this.setUrl()
       this.sendRequest()
     },
+
     next: function () {
-      history.pushState('', 'title', '/' + this.page + '/' + this.type + '/' + this.sort)
+      this.setUrl()
       this.sendRequest()
     },
 
     setPage: function () {
-      ((this.$route.params.page === undefined) || isNaN(this.$route.params.page)) ? (this.page = 1) : (this.page = parseInt(this.$route.params.page))
+      ((this.$route.query.page === undefined) || isNaN(this.$route.query.page)) ? (this.page = 1) : (this.page = parseInt(this.$route.query.page))
     },
     setType: function () {
-      (this.$route.params.type === undefined) ? (this.type = 'name') : (this.name = (this.$route.params.name))
+      (this.$route.query.type === undefined) ? (this.type = 'name') : (this.name = (this.$route.query.type))
     },
     setSort: function () {
-      (this.$route.params.sort === undefined) ? (this.sort = 'asc') : (this.sort = this.$route.params.sort)
+      (this.$route.query.sort === undefined) ? (this.sort = 'asc') : (this.sort = this.$route.query.sort)
+    },
+
+    setUrl: function () {
+      this.$router.push(
+        {name: 'AddsList', query: {page: this.page, type: this.type, sort: this.sort}}
+      )
     },
 
     sendRequest: function () {
-      var params = {
-        page: this.page,
-        type: this.type,
-        sort: this.sort
-      }
+      var params = this.$route.fullPath
       this.$store.dispatch('products/index', params)
     }
   },
@@ -175,9 +171,8 @@ export default {
     this.setPage()
     this.setType()
     this.setSort()
-    history.pushState('', '', '/' + this.page + '/' + this.type + '/' + this.sort)
+    this.setUrl()
     this.sendRequest()
-    console.log(this.page, this.type, this.sort)
   }
 }
 </script>

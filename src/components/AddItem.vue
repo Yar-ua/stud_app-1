@@ -34,7 +34,7 @@
           </v-card-text>
           <v-divider class="mt-5"></v-divider>
           <v-card-actions>
-            <v-btn :to="{name: 'AddsList'}">Cancel</v-btn>
+            <v-btn :to="{name: 'AddsList'}">BACK</v-btn>
             <v-spacer></v-spacer>
             <v-slide-x-reverse-transition>
             </v-slide-x-reverse-transition>

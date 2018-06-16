@@ -13,7 +13,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/:page?/:type?/:sort?',
+      path: '/',
       name: 'AddsList',
       component: AddsList
     },
@@ -28,7 +28,7 @@ export default new Router({
       component: Register
     },
     {
-      path: '/products/:id(\\d+)/:preview?',
+      path: '/products/:id(\\d+)/preview',
       name: 'SingleAdd',
       component: SingleAdd
     },
@@ -38,7 +38,7 @@ export default new Router({
       component: AddForm
     },
     {
-      path: '/products/:id(\\d+)/:preview?',
+      path: '/products/:id(\\d+)',
       name: 'AddItem',
       component: AddItem
     },
