@@ -1,6 +1,6 @@
 <template>
   <div>
-    <addform v-if="item.user_id === user.id"></addform>
+    <addform v-if="(item.user_id === user.id) || (user.role === 'admin')"></addform>
     <additem v-else></additem>
   </div>
 </template>

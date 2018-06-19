@@ -68,11 +68,16 @@
                     <div>{{ item.description }}</div>
                     <div>{{ item.price }} $</div>
                     <v-card-actions>
-                      <template v-if="item.user_id != user.id">
-                        <v-btn flat outline dark :to="{name: 'SingleAdd', params: {id: item.id}}">product info</v-btn>
+                      <template v-if="user.role === 'admin'">
+                        <v-btn dark color="teal darken-1" :to="{name: 'AddForm', params: {id: item.id}}">manage product</v-btn>
                       </template>
                       <template v-else>
-                        <v-btn dark :to="{name: 'AddForm', params: {id: item.id}}">my product</v-btn>
+                        <template v-if="item.user_id != user.id">
+                          <v-btn flat outline dark :to="{name: 'SingleAdd', params: {id: item.id}}">product info</v-btn>
+                        </template>
+                        <template v-else>
+                          <v-btn dark :to="{name: 'AddForm', params: {id: item.id}}">my product</v-btn>
+                        </template>
                       </template>
                     </v-card-actions>
                   </div>

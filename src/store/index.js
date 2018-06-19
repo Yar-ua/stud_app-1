@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import API from './api'
 import products from './products'
+import users from './users'
 
 Vue.use(Vuex)
 
@@ -12,12 +13,14 @@ const Store = new Vuex.Store({
     user: {
       id: localStorage.id ? localStorage.id : '',
       user: localStorage.user ? localStorage.user : '',
-      token: localStorage.token ? localStorage.token : ''
+      token: localStorage.token ? localStorage.token : '',
+      role: localStorage.role ? localStorage.role : ''
     },
     isAuth: !!localStorage.isAuth
   },
   modules: {
-    products
+    products,
+    users
   },
   mutations: {
     updateAuth (state, data) {
@@ -28,10 +31,12 @@ const Store = new Vuex.Store({
       localStorage.id = data.id
       localStorage.user = data.login
       localStorage.token = data.token
+      localStorage.role = data.role
       state.user = {
         id: data.id,
         user: data.login,
-        token: data.token
+        token: data.token,
+        role: data.role
       }
     }
   },
@@ -54,7 +59,7 @@ const Store = new Vuex.Store({
     logout (context) {
       return axios.get(API.logout, '')
         .then(response => {
-          context.commit('updateUser', {id: '', login: '', token: ''})
+          context.commit('updateUser', {id: '', login: '', token: '', role: ''})
           context.commit('updateAuth', false)
           localStorage.clear()
         })

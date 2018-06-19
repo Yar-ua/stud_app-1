@@ -7,6 +7,8 @@ import SingleAdd from '@/components/SingleAdd'
 import AddForm from '@/components/AddForm'
 import AddItem from '@/components/AddItem'
 import Page404 from '@/components/Page404'
+import UsersList from '@/components/UsersList'
+import EditUser from '@/components/EditUser'
 
 Vue.use(Router)
 
@@ -46,6 +48,16 @@ export default new Router({
       path: 'Page404',
       name: 'Page404',
       component: Page404
+    },
+    {
+      path: '/users',
+      name: 'UsersList',
+      component: UsersList
+    },
+    {
+      path: '/users/:id(\\d+)',
+      name: 'EditUser',
+      component: EditUser
     }
   ],
   mode: 'history'

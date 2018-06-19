@@ -26,13 +26,13 @@
                   :rules="priceRules"
                 ></v-text-field>
               </v-flex>
-              <v-flex xs12>
+              <v-flex xs12 sm12>
                 <v-text-field box
-                  v-model="item.description"
-                  multi-line
-                  label="Product's Description"
-                  :rules="descriptionRules"
-                  ></v-text-field>
+                v-model="item.description"
+                multi-line
+                label="Product's Description"
+                :rules="descriptionRules"
+                ></v-text-field>
               </v-flex>
               <template v-if="item.imageUrl != null">
                 <img v-bind:src="item.imageUrl">
@@ -149,7 +149,6 @@ export default {
           this.hasError = false
           console.log(this.item)
           this.$router.push({name: 'SingleAdd', params: {id: this.item.id}})
-          // this.$router.push({name: 'AddsList'})
         })
     },
     update: function () {
@@ -167,7 +166,7 @@ export default {
       }
       this.$store.dispatch('products/update', params)
         .then(() => {
-          this.$router.push({name: 'AddItem', params: {id: this.item.id, preview: 'preview'}})
+          this.$router.push({name: 'SingleAdd', params: {id: this.item.id}})
         })
     },
     destroy: function () {
