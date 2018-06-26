@@ -30,8 +30,14 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <img id="logo" src="@/assets/logo.png" alt="Smiley face">
       <v-toolbar-title>YarMarket</v-toolbar-title>
+      <template v-if="user.role === 'admin'">
+        <v-toolbar-title>admin mode</v-toolbar-title>
+      </template>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
+      <template v-if="user.role === 'admin'">
+        <v-btn flat :to="{name: 'UsersList'}">Users control</v-btn>
+      </template>
         <v-btn flat :to="{name: 'AddsList'}">Market Menu</v-btn>
         <template v-if="!isAuth">
           <v-btn flat :to="{name: 'Login'}">Login</v-btn>
